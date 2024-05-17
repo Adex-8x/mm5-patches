@@ -1,0 +1,36 @@
+<PMD2>
+  <!--=======================================================================-->
+  <!--ASM Patches Constants-->
+  <!--=======================================================================-->
+  <!--Put the data defining your patch here.-->
+  <ASMPatchesConstants>
+
+    <!--*******************-->
+    <!--Patches list-->
+    <!--*******************-->
+    <!--Patching steps for applying various asm patches on the game-->
+    <Patches>
+      <!-- This example only contains the NA and EU patch -->
+      <Game id="EoS_NA" id2="EoS_EU">
+      
+        <Patch id="AddNewOpcodes">
+	  <OpenBin filepath="arm9.bin">
+            <Include filename ="patch_arm9.asm"/>
+          </OpenBin>
+	  <OpenBin filepath="overlay/overlay_0011.bin">
+            <Include filename ="patch_ov11.asm"/>
+          </OpenBin>
+	  <OpenBin filepath="overlay/overlay_0036.bin">
+            <Include filename ="patch_ov36.asm"/>
+          </OpenBin>
+	<Parameters>
+             <Param name="StartAddress" label="Overlay36 Start Address" min="0" max="0x38F80" default="0x30F70" type="int"/>
+	</Parameters>
+        </Patch>
+        
+      </Game>
+    </Patches>
+
+  </ASMPatchesConstants>
+</PMD2>
+
