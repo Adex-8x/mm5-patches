@@ -16,7 +16,7 @@ MSYS2 is a Unix-like environment for Windows. It provides a terminal and a packa
 4. Install Python dependencies: `pip3 install pyyaml ndspy`
 5. Navigate to the directory where you want to install c-of-time. You can use `cd` to change the directory and `ls` to list the contents of the current directory. For example, if you want to install c-of-time to `C:\Users\YourName\Documents\c-of-time`, run `cd /c/Users/YourName/Documents`.
     - **Note:** You can also use the Windows Explorer to navigate to the directory where you want to install c-of-time. Right-click in the directory and select "Open in Terminal", then run `C:\msys64\msys2_shell.cmd -mingw64 -here` to open a terminal in that directory.
-6. Download this repository by running `git clone --recursive https://github.com/SkyTemple/c-of-time.git` in the MSYS2 terminal. c-of-time will be downloaded in a folder called `c-of-time` inside the current directory.
+6. Download this repository by running `git clone --recursive https://github.com/Adex-8x/mm5-patches.git` in the MSYS2 terminal. c-of-time will be downloaded in a folder called `c-of-time` inside the current directory.
 7. Enter the `c-of-time` directory with `cd c-of-time`.
 8. Copy the ROM you have prepared into the `c-of-time` directory and rename it to `rom.nds`. You can open Windows Explorer in the current directory by running `explorer .` in the MSYS2 terminal.
     - **US ROM offsets are used by default.** If you're using a EU ROM, change the `REGION` variable in `Makefile` to `EU`.

@@ -1,11 +1,12 @@
 # mm5-patches
 A collection of custom ARM Assembly and C patches specifically written for the fifth (currently untitled) MysteryMail event. The featured code is still a work in progress and may feature some degree of spoilers as the event takes place!
+If you are a participant while this event is ongoing and wish to add your own custom ASM/C code to the MM5 ROM, please contribute to this repository (following the installation steps as outlined below).
 
 Skypatches may not have the proper description or "Applied" functionality (mainly due to my sheer laziness).
 
 All patches were designed with the NA/US version in mind and likely do/will not have EU or JP support.
 
-# Original c-of-time README
+# Slightly edited c-of-time README
 
 ![c-of-time logo by Irdkwia](./cot-logo.png)
 *Logo by [Irdkwia](https://github.com/irdkwia)*
@@ -93,14 +94,7 @@ error "section '.text' will not fit in region 'out'"
 ### Expanding the available space
 To work around this issue, you can extend the space allocated in the overlay. **If you decide to extend the space, you do so at your own risk. Be careful since this space might be used by future patches!** Check the [list of assigned areas](https://docs.google.com/document/d/1Rs4icdYtiM6KYnWxMkdlw7jpWrH7qw5v6LOfDWIiYho) to find out if patches used in your ROM are affected.
 
-The value of `ORIGIN` must a multiple of 16 (end with 0 in hexadecimal). Therefore, the amount of bytes added to `LENGTH` must also be a multiple of 16.
-
-To extend the allocated space, open `linker.ld` and edit the following line:
-```
-out     : ORIGIN = 0x23D7FF0, LENGTH = 0x8010
-```
-
-Subtract the amount of additional bytes you want to allocate from `ORIGIN` and add them to `LENGTH`. Next, open `patches/patch.py` and set `START_ADDRESS` of the top of the file to the same value as `ORIGIN` in the linker script.
+The value of `ORIGIN` must a multiple of 16 (end with 0 in hexadecimal). Therefore, the amount of bytes added to `LENGTH` must also be a multiple of 16. However, if you are a participant wishing to contribute to this repository, you don't have to worry and should _not_ edit `ORIGIN` nor `LENGTH`!
 
 ### Optimizing for size
 You can also change the compiler flags to optimize for size instead of speed. To do so, set `OPT_LEVEL := Os` in `Makefile`. Effectiveness varies per project.

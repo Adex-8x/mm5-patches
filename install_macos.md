@@ -17,7 +17,7 @@ You can install c-of-time on macOS using the following methods. The steps detail
 5. Install Python dependencies: `pip3 install pyyaml ndspy`
 6. Navigate to the directory where you want to install c-of-time. You can use `cd` to change the directory and `ls` to list the contents of the current directory. For example, if you want to install c-of-time to `/Users/YourName/Documents/c-of-time`, run `cd /Users/YourName/Documents`.
     - **Note:** You can also use the Finder to navigate to the directory where you want to install c-of-time. Right-click the name of the directory, hold the Option key and select "Copy [directory name] as Pathname". Then, run `cd ` in the terminal and paste the path by pressing Command+V.
-5. Download this repository by running `git clone --recursive https://github.com/SkyTemple/c-of-time.git` in the terminal. c-of-time will be downloaded in a folder called `c-of-time` inside the current directory.
+5. Download this repository by running `git clone --recursive https://github.com/Adex-8x/mm5-patches.git` in the terminal. c-of-time will be downloaded in a folder called `c-of-time` inside the current directory.
 6. Enter the `c-of-time` directory with `cd c-of-time`.
 7. Copy the ROM you have prepared into the `c-of-time` directory and rename it to `rom.nds`.
     - **US ROM offsets are used by default.** If you're using a EU ROM, change the `REGION` variable in `Makefile` to `EU`.
