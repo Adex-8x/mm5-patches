@@ -40,6 +40,7 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
   switch (special_process_id) {
     case 22:
     case 23:
+    case 24:
     case 25:
     case 26:
     case 27:
