@@ -15,3 +15,99 @@ void __attribute__((used)) CustomGetSceneName(char* buf, char* scene_name)
     else
         GetSceneName(buf, scene_name);
 }
+
+bool GetDsFirmwareNicknameAscii(char* buf)
+{
+    struct firmware_info firmware_info;
+    MemZero(buf, 11);
+    GetDsFirmwareInfo(&firmware_info);
+    if(firmware_info.nickname_length == 0)
+        return false;
+    for(int i = 0; i < firmware_info.nickname_length; i++)
+    {
+        uint16_t nickname_char = firmware_info.nickname[i];
+        if(nickname_char == 0)
+            break;
+        if(nickname_char > 0xFF)
+            return false;
+        buf[i] = nickname_char;
+    }
+    return true;
+}
+
+bool __attribute__((used)) HandleLowercaseJTag(const char* tag_string, char* buf, int tag_param_count)
+{
+    if(StrcmpTag(tag_string, "jugador"))
+    {
+        char nickname[11];
+        if(GetDsFirmwareNicknameAscii(nickname))
+            SprintfStatic(buf, "[CS:O]%s[CR]", nickname);
+        else
+            strcpy(buf, "[CS:O]Unknown[CR]");
+        return true;
+    }
+    else if(StrcmpTag(tag_string, "joy"))
+    {
+        struct clock_info clock_info;
+        GetCurrentClockInfo(&clock_info);
+        SprintfClockInfo(&clock_info, buf);
+        return true;
+    }
+    return false;
+}
+
+bool __attribute__((used)) HandleUppercaseNTag(const char* tag_string, const char* tag_string_param1, const char* tag_string_param2, int tag_param_count)
+{
+    // Don't mind this tag, you shouldn't ever have the need to use it...
+    if(StrcmpTag(tag_string, "N") && tag_param_count >= 3)
+    {
+        struct portrait_params portrait_params = {
+            .monster_id = 0,
+            .portrait_emotion = 0,
+            .layout_idx = 0,
+            .offset_x = 0,
+            .offset_y = 0,
+            .try_flip = false,
+            .has_flip = false,
+            .hw_flip = false,
+            .allow_default = true,
+        };
+        int index = AtoiTag(tag_string_param1);
+        int emotion = AtoiTag(tag_string_param2);
+        portrait_params.monster_id.val = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, index);
+        portrait_params.offset_y = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_HEIGHT, index);
+        if(emotion != 99)
+        {
+            portrait_params.portrait_emotion.val = emotion;
+            ShowPortraitInPortraitBox(LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_X, index), &portrait_params);
+        }
+        else
+            HidePortraitBox(LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_X, index));
+        return true;
+    }
+    return false;
+}
+
+void __attribute__((naked)) NoLowercaseJTagFound()
+{
+    asm("ldr r0,[r13,#0xB4]");
+    asm("add r1,r13,#0x1C8");
+    asm("mov r2,r6");
+    asm("bl HandleLowercaseJTag");
+    asm("cmp r0,#0");
+    asm("beq LowercaseTagCodeError");
+    asm("add r7,r13,#0x1C8");
+    asm("b AfterLowercaseTagIsFound");
+}
+
+void __attribute__((naked)) NoUppercaseNTagFound()
+{
+    asm("ldr r0,[r13,#0x70]");
+    asm("ldr r1,[r13,#0x74]");
+    asm("ldr r2,[r13,#0x78]");
+    asm("mov r3,r6");
+    asm("bl HandleUppercaseNTag");
+    asm("cmp r0,#0");
+    asm("beq UppercaseTagCodeError");
+    asm("b AfterUppercaseTagIsFound");
+}

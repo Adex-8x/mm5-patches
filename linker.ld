@@ -7,6 +7,7 @@ MEMORY {
         main    : ORIGIN = 0x23DB1B0, LENGTH = 0x2E50
         /* Change/Add memory locations here */
         /* NEW    : ORIGIN = 0x2000000, LENGTH = 0x800 */
+        
 }
 
 SECTIONS {
@@ -19,9 +20,7 @@ SECTIONS {
                 NB is the OV number (7 or 9 for 'arm', any ARM9 Overlay number for 'ov')
                 SPECIAL is a distinct name, this is only to distinguish between 2 sections on the same overlay
         */
-        /*.text.OV.NB.SPECIAL : {
-                *(.YOURSECTIONNAME)
-        } >NEW = 0xff*/
+
         /*
                 Main Section (Default section, in ARM9 overlay 36)
                 Note that you should add your special sections before that

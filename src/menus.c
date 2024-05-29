@@ -60,6 +60,22 @@ void CreateSceneSelectorSubMenu(int option_id)
 }
 
 /*
+  Creates an important message for someone who tries to do...undesirable actions.
+  Given the conditions in which this function is called, there surely aren't any other exploitative interactions.
+
+  Right...?
+  Certain special processes and menus...SURELY, no other opcode can put up a fight.
+*/
+void __attribute__((used)) CreateNewSaveMenu()
+{
+    struct window_params unk_params = { .update = 0x0202FF10, .x_offset = 0x2, .y_offset = 0x2, .width = 0x1C, .height = 0x14, .screen = 0x0, .box_type = 0xFF };
+    struct window_flags unk_flags;
+    StopBgmCommand();
+    PlaySoundEffect(6415);
+    CUSTOM_MAIN_MENU_ID = CreateImportantWarning(&unk_params, unk_flags, NULL);
+}
+
+/*
   Initializes menus with IDs that are greater than what the base game expects!
 */
 void __attribute__((used)) NewMenuStart(int menu_id)
@@ -72,6 +88,9 @@ void __attribute__((used)) NewMenuStart(int menu_id)
     FRAME_COUNTER = -1;
     switch(menu_id)
     {
+        case 11:
+            CreateNewSaveMenu();
+            break;
         case 100:
             int last_played_scene = LoadScriptVariableValue(NULL, VAR_DUNGEON_EVENT_LOCAL);
             CreateSceneSelectorMainMenu(last_played_scene > 0 && last_played_scene <= 26 ? last_played_scene-1 : 0);
@@ -97,6 +116,10 @@ int __attribute__((used)) NewMenuEnd(int menu_id)
     {
         switch(menu_id)
         {
+            case 11:
+                DelayMenuFunc = WaitForever;
+                FRAME_COUNTER = 90;
+                break;
             case 100:
                 switch(MENU_STATE)
                 {
