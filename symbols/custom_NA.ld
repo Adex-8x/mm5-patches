@@ -21,6 +21,9 @@ LoadStaffont = 0x02025B90;
 UpdateScreenFadeWrapper = 0x0200bb74;
 SomeFadeInFunctionIdk = 0x0200bb60;
 ChangeVolumeBgm = 0x2017f64;
+GreaterThanActorId0xABranch = 0x02023f6c;
+DefaultActorNameColor = 0x02023f84;
+UseYellowName = 0x02023e00;
 
 /* !file overlay11 */
 MenuStartFinish = 0x022e68ac;
@@ -33,3 +36,4 @@ GetSceneName = 0x022e4600;
 BranchProcessSpecialOpcode = 0x022de110;
 ParseProcessSpecialOpcode = 0x022de448;
 ProcessMessageMenuParam1 = 0x022de3f4;
+SomeGroundModeLoopUpdateFunctionIdk = 0x022dc808;

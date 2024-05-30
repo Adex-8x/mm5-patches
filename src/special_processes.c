@@ -31,6 +31,31 @@ static bool SpCheckInputStatus(short arg1, short arg2) {
   return buttons.bitfield & arg1 ? true : false;
 }
 
+static bool SpCreateSpecialWindow(short idx)
+{
+  struct window_params window_params[] = { 
+    {.x_offset = 0x1, .y_offset = 0x1, .width = 0x1E, .height = 0x4, .screen = 0x1, .box_type = 0xFF } 
+  };
+  struct preprocessor_flags dbox_flags[] = {
+    {.flags_1 = 0b0010, .flags_11 = 0b00}
+  };
+  uint16_t message_ids[] = {11621};
+  SPECIAL_DBOX_ID = CreateDialogueBox(&(window_params[idx]));
+  SPECIAL_DBOX_TYPE = idx;
+  SPECIAL_MESSAGE_ID = message_ids[idx];
+  SPECIAL_PREPROCRESSOR_FLAGS = dbox_flags[idx];
+  ShowStringIdInDialogueBox(SPECIAL_DBOX_ID, SPECIAL_PREPROCRESSOR_FLAGS, SPECIAL_MESSAGE_ID, NULL);
+  SaveScriptVariableValueAtIndex(NULL, VAR_PERFORMANCE_PROGRESS_LIST, 62, 1);
+  return true;
+}
+
+static bool SpCloseSpecialWindow()
+{
+  SaveScriptVariableValueAtIndex(NULL, VAR_PERFORMANCE_PROGRESS_LIST, 62, 0);
+  CloseDialogueBox(SPECIAL_DBOX_ID);
+  return true;
+}
+
 
 // Called for some special custom processes!
 
@@ -45,6 +70,7 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
     case 26:
     case 27:
       CreateNewSaveMenu();
+      *return_val = 0;
       return true;
     case 100:
       *return_val = SpChangeBorderColor(arg1);
@@ -54,6 +80,12 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
       return true;
     case 102:
       *return_val = SpCheckInputStatus(arg1, arg2);
+      return true;
+    case 254:
+      *return_val = SpCreateSpecialWindow(arg1);
+      return true;
+    case 255:
+      *return_val = SpCloseSpecialWindow();
       return true;
     default:
       return false;

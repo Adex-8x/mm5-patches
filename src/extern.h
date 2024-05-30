@@ -3,6 +3,11 @@
 #include <pmdsky.h>
 #include <cot.h>
 
+extern uint8_t SPECIAL_DBOX_ID;
+extern uint8_t SPECIAL_DBOX_TYPE;
+extern uint16_t SPECIAL_MESSAGE_ID;
+extern struct preprocessor_flags SPECIAL_PREPROCRESSOR_FLAGS;
+
 struct button_struct {
   uint16_t bitfield;
   int16_t unk;
@@ -74,6 +79,7 @@ void GetCurrentClockInfo(struct clock_info* clock_info);
 void SprintfClockInfo(struct clock_info* clock_info, char* buf);
 void LoadStaffont(int idx);
 void FadeOutTopScreenTopMenu(int duration);
+void SomeGroundModeLoopUpdateFunctionIdk();
 
 #define TEXT_STRING_SCENE_SELECTOR_TITLE 8735
 #define TEXT_STRING_MYSTERYMAIL_BLURB 8736

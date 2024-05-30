@@ -11,6 +11,11 @@
     .area 0x4
         b NoUppercaseNTagFound
     .endarea
+
+    .org GreaterThanActorId0xABranch
+    .area 0x4
+        bge HandleSpecialActorIds
+    .endarea
 .close
 
 .open "overlay11.bin", overlay11_start
@@ -37,5 +42,10 @@
     .org GetSceneNameCallsite
     .area 0x4
         bl CustomGetSceneName
+    .endarea
+
+    .org 0x022e8e28
+    .area 0x4
+        bl CustomUpdateAnything
     .endarea
 .close

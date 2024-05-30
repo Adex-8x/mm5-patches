@@ -2,6 +2,11 @@
 #include <cot.h>
 #include "extern.h"
 
+uint8_t SPECIAL_DBOX_ID;
+uint8_t SPECIAL_DBOX_TYPE;
+uint16_t SPECIAL_MESSAGE_ID;
+struct preprocessor_flags SPECIAL_PREPROCRESSOR_FLAGS;
+
 void __attribute__((used)) CustomGetSceneName(char* buf, char* scene_name)
 {
     if(strncmp(scene_name, "event", 8) == 0)
@@ -110,4 +115,34 @@ void __attribute__((naked)) NoUppercaseNTagFound()
     asm("cmp r0,#0");
     asm("beq UppercaseTagCodeError");
     asm("b AfterUppercaseTagIsFound");
+}
+
+void __attribute__((used)) CustomUpdateAnything()
+{
+    SomeGroundModeLoopUpdateFunctionIdk();
+    if(LoadScriptVariableValueAtIndex(NULL, VAR_PERFORMANCE_PROGRESS_LIST, 62))
+    {
+        switch(SPECIAL_DBOX_TYPE)
+        {
+            case 0:
+                if(!IsDialogueBoxActive(SPECIAL_DBOX_ID))
+                {
+                    SPECIAL_MESSAGE_ID++;
+                    ShowStringIdInDialogueBox(SPECIAL_DBOX_ID, SPECIAL_PREPROCRESSOR_FLAGS, SPECIAL_MESSAGE_ID, NULL);
+                }
+                break;
+        }
+    }
+}
+
+void __attribute__((naked)) HandleSpecialActorIds()
+{
+    asm("mov r12,#300");
+    asm("add r12,r12,#86");
+    asm("cmp r0,r12");
+    asm("blt DefaultActorNameColor");
+    asm("add r12,r12,#4");
+    asm("cmp r0,r12");
+    asm("bgt DefaultActorNameColor");
+    asm("b UseYellowName");
 }
