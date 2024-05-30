@@ -75,8 +75,6 @@ void SprintfClockInfo(struct clock_info* clock_info, char* buf);
 void LoadStaffont(int idx);
 void FadeOutTopScreenTopMenu(int duration);
 
-extern struct screen_fade TOP_MENU_TOP_SCREEN_FADE;
-
 #define TEXT_STRING_SCENE_SELECTOR_TITLE 8735
 #define TEXT_STRING_MYSTERYMAIL_BLURB 8736
 #define TEXT_STRING_PARTICIPANT_NAME_START 8737

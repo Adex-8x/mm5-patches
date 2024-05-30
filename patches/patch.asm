@@ -38,10 +38,4 @@
     .area 0x4
         bl CustomGetSceneName
     .endarea
-
-    .org 0x022e1be0 ; Apply and delete later
-    .area 0x8
-        ldrh r0,[r5,#0x2]
-        bl ProcessScriptParam
-    .endarea
 .close
