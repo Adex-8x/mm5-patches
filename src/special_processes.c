@@ -39,7 +39,7 @@ static bool SpCreateSpecialWindow(short idx)
   };
   struct preprocessor_flags dbox_flags[] = {
     {.flags_1 = 0b0010, .flags_11 = 0b00},
-    {.flags_1 = 0b1100, .flags_11 = 0b10} // 0x1018
+    {.flags_1 = 0b1110, .flags_11 = 0b10}
   };
   uint16_t message_ids[] = {11621, 568};
   SPECIAL_DBOX_ID = CreateDialogueBox(&(window_params[idx]));
