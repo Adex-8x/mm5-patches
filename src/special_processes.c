@@ -34,12 +34,14 @@ static bool SpCheckInputStatus(short arg1, short arg2) {
 static bool SpCreateSpecialWindow(short idx)
 {
   struct window_params window_params[] = { 
-    {.x_offset = 0x1, .y_offset = 0x1, .width = 0x1E, .height = 0x4, .screen = 0x1, .box_type = 0xFF } 
+    {.x_offset = 0x1, .y_offset = 0x1, .width = 0x1E, .height = 0x4, .screen = 0x1, .box_type = 0xFF},
+    {.x_offset = 0x2, .y_offset = 0x2, .width = 0x1C, .height = 0x14, .screen = 0x0, .box_type = 0xFA}
   };
   struct preprocessor_flags dbox_flags[] = {
-    {.flags_1 = 0b0010, .flags_11 = 0b00}
+    {.flags_1 = 0b0010, .flags_11 = 0b00},
+    {.flags_1 = 0b1100, .flags_11 = 0b10} // 0x1018
   };
-  uint16_t message_ids[] = {11621};
+  uint16_t message_ids[] = {11621, 568};
   SPECIAL_DBOX_ID = CreateDialogueBox(&(window_params[idx]));
   SPECIAL_DBOX_TYPE = idx;
   SPECIAL_MESSAGE_ID = message_ids[idx];

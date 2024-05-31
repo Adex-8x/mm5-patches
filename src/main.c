@@ -131,8 +131,34 @@ void __attribute__((used)) CustomUpdateAnything()
                     ShowStringIdInDialogueBox(SPECIAL_DBOX_ID, SPECIAL_PREPROCRESSOR_FLAGS, SPECIAL_MESSAGE_ID, NULL);
                 }
                 break;
+            case 1:
+                if(!IsDialogueBoxActive(SPECIAL_DBOX_ID))
+                {
+                    if(SPECIAL_MESSAGE_ID <= 571)
+                    {
+                        SPECIAL_MESSAGE_ID++;
+                        ShowStringIdInDialogueBox(SPECIAL_DBOX_ID, SPECIAL_PREPROCRESSOR_FLAGS, SPECIAL_MESSAGE_ID, NULL);
+                    }
+                    else
+                    {
+                        SaveScriptVariableValueAtIndex(NULL, VAR_PERFORMANCE_PROGRESS_LIST, 62, 0);
+                        CloseDialogueBox(SPECIAL_DBOX_ID);
+                    }
+                }
+                break;
         }
     }
+}
+
+void __attribute__((naked)) ManipulateActorFlags()
+{
+    asm("stmdb r13!,{r0,r1,r14}");
+    asm("mov r5,r2");
+    asm("mov r0,#61");
+    asm("bl GetPerformanceFlagWithChecks");
+    asm("cmp r0,#0");
+    asm("orrne r5,r5,#0x80000000");
+    asm("ldmia r13!,{r0,r1,r15}");
 }
 
 void __attribute__((naked)) HandleSpecialActorIds()

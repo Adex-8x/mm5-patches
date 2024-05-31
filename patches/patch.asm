@@ -48,4 +48,9 @@
     .area 0x4
         bl CustomUpdateAnything
     .endarea
+
+    .org LoadActorAnimDataStart
+    .area 0x4
+        bl ManipulateActorFlags
+    .endarea
 .close
