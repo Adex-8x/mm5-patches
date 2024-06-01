@@ -150,15 +150,16 @@ void __attribute__((used)) CustomUpdateAnything()
     }
 }
 
-void __attribute__((naked)) ManipulateActorFlags()
+void __attribute__((naked)) ManipulateActorLayering()
 {
-    asm("stmdb r13!,{r0,r1,r14}");
-    asm("mov r5,r2");
     asm("mov r0,#61");
     asm("bl GetPerformanceFlagWithChecks");
     asm("cmp r0,#0");
-    asm("orrne r5,r5,#0x80000000");
-    asm("ldmia r13!,{r0,r1,r15}");
+    asm("ldr r12,[r7,#0x128]");
+    asm("orrne r12,#0x80000000"); // Top Screen
+    asm("strne r12,[r7,#0x128]");
+    asm("ldrb r0,[r4,#0xa]"); // Original instruction
+    asm("b LoadActorLayeringBitfeld+0x4");
 }
 
 void __attribute__((naked)) HandleSpecialActorIds()

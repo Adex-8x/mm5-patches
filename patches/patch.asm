@@ -51,6 +51,11 @@
 
     .org LoadActorAnimDataStart
     .area 0x4
-        bl ManipulateActorFlags
+        tst r5,#0x80000000 ; Original instruction, had to revert
+    .endarea
+
+    .org LoadActorLayeringBitfeld
+    .area 0x4
+        bl ManipulateActorLayering
     .endarea
 .close

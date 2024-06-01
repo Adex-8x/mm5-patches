@@ -38,3 +38,4 @@ ParseProcessSpecialOpcode = 0x022de448;
 ProcessMessageMenuParam1 = 0x022de3f4;
 SomeGroundModeLoopUpdateFunctionIdk = 0x022dc808;
 LoadActorAnimDataStart = 0x022f5bcc;
+LoadActorLayeringBitfeld = 0x022f816c;
