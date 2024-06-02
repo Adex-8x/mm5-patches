@@ -16,6 +16,12 @@
     .area 0x4
         bge HandleSpecialActorIds
     .endarea
+
+    .org SaveFileIdentifier ; Don't ask
+    .area 0x10
+        .asciiz "MYSTERYMAIL"
+        .fill NoteSetHeaderMode-., 0x0
+    .endarea
 .close
 
 .open "overlay11.bin", overlay11_start
