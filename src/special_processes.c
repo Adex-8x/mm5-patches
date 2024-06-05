@@ -44,7 +44,8 @@ static bool SpCreateSpecialWindow(short idx, short optional_message_id)
     {.flags_1 = 0b0010, .flags_11 = 0b00}
   };
   uint16_t message_ids[] = {11621, 568, 0};
-  SPECIAL_DBOX_ID = CreateDialogueBox(&(window_params[idx]));
+  if(LoadScriptVariableValueAtIndex(NULL, VAR_PERFORMANCE_PROGRESS_LIST, 62) == 0)
+    SPECIAL_DBOX_ID = CreateDialogueBox(&(window_params[idx]));
   SPECIAL_DBOX_TYPE = idx;
   SPECIAL_PREPROCRESSOR_FLAGS = dbox_flags[idx];
   SPECIAL_MESSAGE_ID = message_ids[idx] > 0 ? message_ids[idx] : optional_message_id;
