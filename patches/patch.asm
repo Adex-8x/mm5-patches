@@ -22,6 +22,11 @@
         .asciiz "MYSTERYMAIL"
         .fill NoteSetHeaderMode-., 0x0
     .endarea
+
+    .org CreatePortraitBoxCallsite
+    .area 0x4
+        bl CustomCreatePortraitBox
+    .endarea
 .close
 
 .open "overlay11.bin", overlay11_start

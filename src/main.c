@@ -150,6 +150,14 @@ void __attribute__((used)) CustomUpdateAnything()
     }
 }
 
+void __attribute__((used)) CustomCreatePortraitBox(enum screen screen, uint32_t palette_idx, bool framed)
+{
+    enum screen new_screen = screen;
+    if(LoadScriptVariableValue(NULL, VAR_VERSION) == 11621)
+        new_screen = LoadScriptVariableValueAtIndex(NULL, VAR_SCENARIO_SUB3, 0);
+    CreatePortraitBox(new_screen, palette_idx, framed);
+}
+
 void __attribute__((naked)) ManipulateActorLayering()
 {
     asm("mov r0,#61");

@@ -26,6 +26,7 @@ DefaultActorNameColor = 0x02023f84;
 UseYellowName = 0x02023e00;
 SaveFileIdentifier = 0x0209cd3c;
 NoteSetHeaderMode = 0x0209cd4c;
+CreatePortraitBoxCallsite = 0x02035118;
 
 /* !file overlay11 */
 MenuStartFinish = 0x022e68ac;

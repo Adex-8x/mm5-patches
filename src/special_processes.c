@@ -31,21 +31,23 @@ static bool SpCheckInputStatus(short arg1, short arg2) {
   return buttons.bitfield & arg1 ? true : false;
 }
 
-static bool SpCreateSpecialWindow(short idx)
+static bool SpCreateSpecialWindow(short idx, short optional_message_id)
 {
   struct window_params window_params[] = { 
     {.x_offset = 0x1, .y_offset = 0x1, .width = 0x1E, .height = 0x4, .screen = 0x1, .box_type = 0xFF},
-    {.x_offset = 0x2, .y_offset = 0x2, .width = 0x1C, .height = 0x14, .screen = 0x0, .box_type = 0xFA}
+    {.x_offset = 0x2, .y_offset = 0x2, .width = 0x1C, .height = 0x14, .screen = 0x0, .box_type = 0xFA},
+    {.x_offset = 0xE, .y_offset = 0x2, .width = 0x10, .height = 0x2, .screen = 0x0, .box_type = 0xFD}
   };
   struct preprocessor_flags dbox_flags[] = {
     {.flags_1 = 0b0010, .flags_11 = 0b00},
-    {.flags_1 = 0b1110, .flags_11 = 0b10}
+    {.flags_1 = 0b1110, .flags_11 = 0b10},
+    {.flags_1 = 0b0010, .flags_11 = 0b00}
   };
-  uint16_t message_ids[] = {11621, 568};
+  uint16_t message_ids[] = {11621, 568, 0};
   SPECIAL_DBOX_ID = CreateDialogueBox(&(window_params[idx]));
   SPECIAL_DBOX_TYPE = idx;
-  SPECIAL_MESSAGE_ID = message_ids[idx];
   SPECIAL_PREPROCRESSOR_FLAGS = dbox_flags[idx];
+  SPECIAL_MESSAGE_ID = message_ids[idx] > 0 ? message_ids[idx] : optional_message_id;
   ShowStringIdInDialogueBox(SPECIAL_DBOX_ID, SPECIAL_PREPROCRESSOR_FLAGS, SPECIAL_MESSAGE_ID, NULL);
   SaveScriptVariableValueAtIndex(NULL, VAR_PERFORMANCE_PROGRESS_LIST, 62, 1);
   return true;
@@ -84,7 +86,7 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
       *return_val = SpCheckInputStatus(arg1, arg2);
       return true;
     case 254:
-      *return_val = SpCreateSpecialWindow(arg1);
+      *return_val = SpCreateSpecialWindow(arg1, arg2);
       return true;
     case 255:
       *return_val = SpCloseSpecialWindow();
