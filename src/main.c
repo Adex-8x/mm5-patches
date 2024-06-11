@@ -127,7 +127,8 @@ void __attribute__((used)) CustomUpdateAnything()
             case 0:
                 if(!IsDialogueBoxActive(SPECIAL_DBOX_ID))
                 {
-                    SPECIAL_MESSAGE_ID++;
+                    if(SPECIAL_MESSAGE_ID < 11626)
+                        SPECIAL_MESSAGE_ID++;
                     ShowStringIdInDialogueBox(SPECIAL_DBOX_ID, SPECIAL_PREPROCRESSOR_FLAGS, SPECIAL_MESSAGE_ID, NULL);
                 }
                 break;
@@ -176,7 +177,10 @@ void __attribute__((naked)) HandleSpecialActorIds()
     asm("add r12,r12,#86");
     asm("cmp r0,r12");
     asm("blt DefaultActorNameColor");
-    asm("add r12,r12,#4");
+    asm("add r12,r12,#8");
+    asm("cmp r0,r12");
+    asm("beq UseYellowName");
+    asm("sub r12,r12,#4");
     asm("cmp r0,r12");
     asm("bgt DefaultActorNameColor");
     asm("b UseYellowName");
