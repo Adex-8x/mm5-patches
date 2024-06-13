@@ -17,6 +17,16 @@
         bge HandleSpecialActorIds
     .endarea
 
+    .org PlayBgmCheck
+    .area 0x4
+        cmp r6,#0x2000
+    .endarea
+
+    .org PlayBgm2Check
+    .area 0x4
+        cmp r6,#0x2000
+    .endarea
+
     .org SaveFileIdentifier ; Don't ask
     .area 0x10
         .asciiz "MYSTERYMAIL"
