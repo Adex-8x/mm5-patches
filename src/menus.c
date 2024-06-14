@@ -18,7 +18,7 @@ char* SceneOptionEntryFn(char* buffer, int option_id)
     // TODO: "Play All", "Credits", and "Name Check" options
     int scene_display = option_id + 1;
     if(scene_display < 26)
-        SprintfStatic(buffer, "[M:S3] Scene %d[CR]", scene_display);
+        SprintfStatic(buffer, "[M:S3] Scene %d", scene_display);
     else
         return "[M:S3] Finale";
     return buffer;

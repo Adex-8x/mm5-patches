@@ -1,6 +1,6 @@
 # mm5-patches
 A collection of custom ARM Assembly and C patches specifically written for the fifth (currently untitled) MysteryMail event. The featured code is still a work in progress and may feature some degree of spoilers as the event takes place!
-If you are a participant while this event is ongoing and wish to add your own custom ASM/C code to the MM5 ROM, please contribute to this repository (following the installation steps as outlined below).
+If you wish to add your own custom ASM/C code to MM5, please contribute to this repository by first following the installation steps as outlined below.
 
 Skypatches may not have the proper description or "Applied" functionality (mainly due to my sheer laziness).
 
