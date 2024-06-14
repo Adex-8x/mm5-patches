@@ -2,11 +2,23 @@
 #include <cot.h>
 #include "extern.h"
 
+// The following variables are for "special" windows that persist via calling Special Process 254.
 uint8_t SPECIAL_DBOX_ID;
 uint8_t SPECIAL_DBOX_TYPE;
 uint16_t SPECIAL_MESSAGE_ID;
 struct preprocessor_flags SPECIAL_PREPROCRESSOR_FLAGS;
 
+/*
+    Hijacks loading a custom Acting scene.
+    In practice, this essentially goes "if we are attempting load an Acting scene with the name 'event', then instead load the scene based on $DUNGEON_EVENT_LOCAL."
+    
+    So for example, if a script had:
+        $DUNGEON_EVENT_LOCAL = 42;
+        supervision_ExecuteActingSub(LEVEL_MYSTERY, 'event', 0);
+    Then the game would attempt to load MYSTERY/42.ssb.
+
+    Participants should have no need to edit this function.
+*/
 void __attribute__((used)) CustomGetSceneName(char* buf, char* scene_name)
 {
     if(strncmp(scene_name, "event", 8) == 0)
@@ -21,6 +33,13 @@ void __attribute__((used)) CustomGetSceneName(char* buf, char* scene_name)
         GetSceneName(buf, scene_name);
 }
 
+/*
+    Attempts to store the DS firmware nickname in the passed buffer as a series of characters.
+    This is done due to the fact that the DS firmware actually stores its nickname (and personal message) in UTF-16,
+    so if we want to reference the nickname in a string in PMD2, we have to attempt to convert it.
+
+    Returns whether the conversion was successful or not.
+*/
 bool GetDsFirmwareNicknameAscii(char* buf)
 {
     struct firmware_info firmware_info;
@@ -40,6 +59,13 @@ bool GetDsFirmwareNicknameAscii(char* buf)
     return true;
 }
 
+/*
+    Handles various possible text tags for the character 'j'. Currently, the new text tags include:
+        - "jugador", which will be replaced with the DS firmware nickname (or "Unknown", if failing to convert the nickname)
+        - "joy", which will print out the system clock's date and time using the format "year/month/day hour:minute:second"
+
+    Returns whether a valid text tag was parsed or not.
+*/
 bool __attribute__((used)) HandleLowercaseJTag(const char* tag_string, char* buf, int tag_param_count)
 {
     if(StrcmpTag(tag_string, "jugador"))
@@ -61,9 +87,15 @@ bool __attribute__((used)) HandleLowercaseJTag(const char* tag_string, char* buf
     return false;
 }
 
+/*
+    Handles various possible text tags for the character 'N'. Currently, the new text tags include:
+        - "N", which changes a currently loaded portrait based on various script variables' values.
+
+    Returns whether a valid text tag was parsed or not.
+*/
 bool __attribute__((used)) HandleUppercaseNTag(const char* tag_string, const char* tag_string_param1, const char* tag_string_param2, int tag_param_count)
 {
-    // Don't mind this tag, you shouldn't ever have the need to use it...
+    // Don't mind this tag, a participant shouldn't ever have the need to use it...
     if(StrcmpTag(tag_string, "N") && tag_param_count >= 3)
     {
         struct portrait_params portrait_params = {
@@ -93,6 +125,9 @@ bool __attribute__((used)) HandleUppercaseNTag(const char* tag_string, const cha
     return false;
 }
 
+/*
+    Hook for handling the 'j' character for text tags.
+*/
 void __attribute__((naked)) NoLowercaseJTagFound()
 {
     asm("ldr r0,[r13,#0xB4]");
@@ -105,6 +140,9 @@ void __attribute__((naked)) NoLowercaseJTagFound()
     asm("b AfterLowercaseTagIsFound");
 }
 
+/*
+    Hook for handling the 'N' character for text tags.
+*/
 void __attribute__((naked)) NoUppercaseNTagFound()
 {
     asm("ldr r0,[r13,#0x70]");
@@ -117,6 +155,13 @@ void __attribute__((naked)) NoUppercaseNTagFound()
     asm("b AfterUppercaseTagIsFound");
 }
 
+/*
+    Updates a "special" window created by Special Process 254.
+    This function gets called (roughly) every frame in ground mode, as it's placed right near another function call that increments the ingame timer.
+
+    Heavily relies on $PERFORMANCE_PROGRESS_LIST[62] to deterimine if a window has been spawned, then performs various actions as a result.
+    The main use case of this function is to create another window running at the same time as a script. Only one "special" window is currently supported.
+*/
 void __attribute__((used)) CustomUpdateAnything()
 {
     SomeGroundModeLoopUpdateFunctionIdk();
@@ -151,6 +196,10 @@ void __attribute__((used)) CustomUpdateAnything()
     }
 }
 
+/*
+    Hijacks a call to CreatePortraitBox to place a portrait loaded by a script command on the Top Screen, if a special window format is active.
+    Please note that framing doesn't seem to work for portraits on the Top Screen.
+*/
 void __attribute__((used)) CustomCreatePortraitBox(enum screen screen, uint32_t palette_idx, bool framed)
 {
     enum screen new_screen = screen;
@@ -159,6 +208,9 @@ void __attribute__((used)) CustomCreatePortraitBox(enum screen screen, uint32_t 
     CreatePortraitBox(new_screen, palette_idx, framed);
 }
 
+/*
+    Loads actors on the Top Screen if $PERFORMANCE_PROGRESS_LIST[61] is set.
+*/
 void __attribute__((naked)) ManipulateActorLayering()
 {
     asm("mov r0,#61");
@@ -171,6 +223,11 @@ void __attribute__((naked)) ManipulateActorLayering()
     asm("b LoadActorLayeringBitfeld+0x4");
 }
 
+/*
+    Decides if the coloring of certain actors' names should be yellow. In particular, the following actors' names will be yellow:
+        - Actors 386 through 390 (inclusive)
+        - Actor 394
+*/
 void __attribute__((naked)) HandleSpecialActorIds()
 {
     asm("mov r12,#300");

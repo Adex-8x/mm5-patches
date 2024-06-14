@@ -8,7 +8,7 @@ It's also encouraged to familiarize yourself with this repo's [`.gitignore`](.gi
 The dedicated ASM patch section will begin at `0x023DA1B0` in Overlay36, consisting of 0x1000 bytes. It is strongly encouraged that patches are written in C, but ASM is also acceptable. Please contribute any standalone ASM patches in the [`asm/`](asm/) folder of this repository. We won't be too strict on how this is formatted, but if it can be applied as a skypatch or ARMIPS, then it's fine.
 
 ## C Patches
-The dedicated C patch section will begin at `0x023DB1B0` in Overlay36, consisting of 0x2E50 bytes. Feel free to edit any of the files as you see fit in [`src/`](src/), as well as [`patch.asm`](patches/patch.asm)
+The dedicated C patch section will begin at `0x023DB1B0` in Overlay36, consisting of 0x2E50 bytes. Feel free to edit any of the files as you see fit in [`src/`](src/), as well as [`patch.asm`](patches/patch.asm).
 
 ## Prohibited Contributions
 There are a handful of house rules in place to maintain the cutscene-centric (well, for the most part) nature of MysteryMail. Not every possible contribution will be accepted. For the most part, you're restricted to writing code that only occurs within ground mode. To be more specific, we will *not* accept:

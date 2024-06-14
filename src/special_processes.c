@@ -13,6 +13,9 @@ static int SpChangeBorderColor(short arg1) {
   return 0;
 }
 
+/*
+    Sets the transparency of the textbox. 0 for solid, anything else for transparency (as seen in dungeon mode).
+*/
 static int SpSetTextboxTransparency(short arg1) {
   if(arg1 == 0)
     TextboxSolid();
@@ -21,6 +24,9 @@ static int SpSetTextboxTransparency(short arg1) {
   return 0;
 }
 
+/*
+    Checks if certain buttons are being held/pressed.
+*/
 static bool SpCheckInputStatus(short arg1, short arg2) {
   struct button_struct buttons;
   int controller = 0;
@@ -31,6 +37,9 @@ static bool SpCheckInputStatus(short arg1, short arg2) {
   return buttons.bitfield & arg1 ? true : false;
 }
 
+/*
+    Creates a special window that will persist even after this process finishes.
+*/
 static bool SpCreateSpecialWindow(short idx, short optional_message_id)
 {
   struct window_params window_params[] = { 
@@ -54,6 +63,9 @@ static bool SpCreateSpecialWindow(short idx, short optional_message_id)
   return true;
 }
 
+/*
+    Forcibly closes a special window created by SpCreateSpecialWindow, AKA Special Process 254.
+*/
 static bool SpCloseSpecialWindow()
 {
   SaveScriptVariableValueAtIndex(NULL, VAR_PERFORMANCE_PROGRESS_LIST, 62, 0);

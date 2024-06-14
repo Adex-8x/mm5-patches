@@ -3,22 +3,25 @@
 #include <pmdsky.h>
 #include <cot.h>
 
+// The following variables are for "special" windows that persist via calling Special Process 254.
 extern uint8_t SPECIAL_DBOX_ID;
 extern uint8_t SPECIAL_DBOX_TYPE;
 extern uint16_t SPECIAL_MESSAGE_ID;
 extern struct preprocessor_flags SPECIAL_PREPROCRESSOR_FLAGS;
 
+// The struct used when calling GetPressedButtons and GetHeldButtons.
 struct button_struct {
   uint16_t bitfield;
   int16_t unk;
 };
 
+// The struct used to organize various pieces of info about the the DS firmware user settings.
 struct firmware_info {
   uint8_t language;
   uint8_t favorite_color;
   uint8_t birth_month;
   uint8_t birth_day;
-  uint16_t nickname[10]; // Yes, NOT char
+  uint16_t nickname[10]; // Yes, NOT char; this is UTF-16
   int16_t unk_0x18; // Always null? Padding?
   uint16_t nickname_length;
   uint16_t message[26];
@@ -26,7 +29,7 @@ struct firmware_info {
   uint16_t message_length;
 };
 
-// Now date & time '2024/05/20 13:02:27'
+// The struct used to organize the DS system clock's settings.
 struct clock_info {
   undefined4 field_0x0;
   int second;
