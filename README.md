@@ -1,10 +1,11 @@
 # mm5-patches
 A collection of custom ARM Assembly and C patches specifically written for the fifth (currently untitled) MysteryMail event. The featured code is still a work in progress and may feature some degree of spoilers as the event takes place!
-If you wish to add your own custom ASM/C code to MM5, please contribute to this repository by first following the installation steps as outlined below.
 
-Skypatches may not have the proper description or "Applied" functionality (mainly due to my sheer laziness).
+Want to get acquainted with the general features of MM5, including code from this repo? You can check out the [features page](https://github.com/Adex-8x/mm5-patches/wiki/MM5-Features) for info on handy patches participants may use!
 
-All patches were designed with the NA/US version in mind and likely do/will not have EU or JP support.
+If you wish to add your own custom ASM/C code to MM5, please contribute to this repository by first following the installation steps as outlined below, then reading the [contrbution page](https://github.com/Adex-8x/mm5-patches/wiki/Contributing-to-mm5%E2%80%90patches) for more info.
+
+All patches are designed with the NA/US version in mind and likely do/will not have EU or JP support.
 
 # Slightly edited c-of-time README
 
