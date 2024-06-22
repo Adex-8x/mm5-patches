@@ -117,8 +117,6 @@ int __attribute__((used)) NewMenuEnd(int menu_id)
         switch(menu_id)
         {
             case 11:
-                DelayMenuFunc = WaitForever;
-                FRAME_COUNTER = 90;
                 break;
             case 100:
                 switch(MENU_STATE)

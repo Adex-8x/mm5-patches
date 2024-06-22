@@ -2,6 +2,8 @@
 #include <cot.h>
 #include "extern.h"
 
+bool process_has_been_called_once = false;
+
 // This function isn't in pmdsky-debug yet, so we have to declare it
 // here and add its offset in "symbols/custom_[region].ld".
 extern void ChangeGlobalBorderColor(int color_type);
@@ -86,8 +88,10 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
     case 25:
     case 26:
     case 27:
-      CreateNewSaveMenu();
-      *return_val = 0;
+      if(!process_has_been_called_once)
+        CreateNewSaveMenu();
+      process_has_been_called_once = true;
+      *return_val = -1; // Negative values cause the script to hang on the process until it receives a non-negative return value!
       return true;
     case 100:
       *return_val = SpChangeBorderColor(arg1);
