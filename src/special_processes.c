@@ -83,7 +83,6 @@ static bool SpCloseSpecialWindow()
 bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_process_id, short arg1, short arg2, int* return_val) {
   switch (special_process_id) {
     case 22:
-    case 23:
     case 24:
     case 25:
     case 26:

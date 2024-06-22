@@ -79,4 +79,14 @@
     .area 0x4
         bl ManipulateActorLayering
     .endarea
+
+    .org JumpToTitleScreen
+    .area 0x4
+        bx r14
+    .endarea
+
+    .org ReturnToTitleScreen
+    .area 0x4
+        bx r14
+    .endarea
 .close
