@@ -1,6 +1,7 @@
 #include <pmdsky.h>
 #include <cot.h>
 #include "extern.h"
+#include "top_screen_management.h"
 
 bool process_has_been_called_once = false;
 
@@ -75,6 +76,8 @@ static bool SpCloseSpecialWindow()
   return true;
 }
 
+// I had problem when I stack-allocated this. // marius
+char temppath[30];
 
 // Called for some special custom processes!
 
@@ -101,6 +104,27 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
     case 102:
       *return_val = SpCheckInputStatus(arg1, arg2);
       return true;
+    
+    // The marius stuff
+
+    // Display an image on top screen, initializing it if needed
+    // The script should make the top screen background does not change
+    case 110:
+      sprintf(temppath, "CUSTOM/SCREEN/%04d.raw", arg1);
+      COT_LOGFMT(COT_LOG_CAT_SPECIAL_PROCESS, "loading top screen raw %s", temppath);
+      displayImageOnTopScreen(temppath);
+      return true;
+    // Return top screen to what it was before it was set by 110 or 111
+    case 111:
+      topScreenReturnToNormal();
+      return true;
+    // Top screen drawing mode
+    case 112:
+      sprintf(temppath, "CUSTOM/DRAWING/%04d.prp", arg1);
+      COT_LOGFMT(COT_LOG_CAT_SPECIAL_PROCESS, "loading prp %s", temppath);
+      initDrawingOnTopScreen(temppath);
+      return true;
+    
     case 254:
       *return_val = SpCreateSpecialWindow(arg1, arg2);
       return true;

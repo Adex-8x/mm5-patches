@@ -89,4 +89,10 @@
     .area 0x4
         bx r14
     .endarea
+
+    .org FrameHookStart
+    .area 0x4
+        bl OnEachFrame
+    .endarea
+
 .close
