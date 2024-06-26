@@ -6,6 +6,7 @@
 void displayImageOnConfiguredTopScreen(const char * filepath) {
     struct file_stream file;
     DataTransferInit();
+    FileInit(&file);
     FileOpen(&file, filepath);
     FileRead(&file, ((void *) 0x6840000), 0x1FFFF);
     DataTransferStop();

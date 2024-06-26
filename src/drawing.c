@@ -15,6 +15,7 @@ void init_drawing(const char* filepath) {
     DRAWING_STATE.file_closed = 0;
     DRAWING_STATE.color_base = 0x8000;
     DataTransferInit();
+    FileInit(&DRAWING_STATE.file);
     FileOpen(&DRAWING_STATE.file, filepath);
     FileRead(&DRAWING_STATE.file, &DRAWING_STATE.command_buffer, BUFFER_SIZE * 4);
     DataTransferStop();

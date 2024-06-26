@@ -114,7 +114,7 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
       COT_LOGFMT(COT_LOG_CAT_SPECIAL_PROCESS, "loading top screen raw %s", temppath);
       displayImageOnTopScreen(temppath);
       return true;
-    // Return top screen to what it was before it was set by 110 or 111
+    // Return top screen to what it was before it was set by 110 or 112
     case 111:
       topScreenReturnToNormal();
       return true;
