@@ -242,3 +242,11 @@ void __attribute__((naked)) HandleSpecialActorIds()
     asm("bgt DefaultActorNameColor");
     asm("b UseYellowName");
 }
+
+extern void FrameHookCallAtEnd();
+
+// On each frame, but only in the overworld (overlay 11)
+__attribute__((used)) void OnEachFrame() {
+    CustomTopScreenOnEachFrame();
+    FrameHookCallAtEnd();
+}

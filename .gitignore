@@ -16,3 +16,6 @@ decoi*
 
 patches/generated_by_rust.cotpatch
 extracted/
+
+temp_rom_folder/
+fs_patch_temp/

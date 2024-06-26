@@ -91,3 +91,20 @@ void SomeGroundModeLoopUpdateFunctionIdk();
 #define TEXT_STRING_PLAY_FINALE_QUESTION 8764
 
 static void PlaySoundEffect(int se_id) { se_Play(se_id, 0x100, 0x1F); }
+
+
+
+// Some video-related control register
+volatile extern int32_t DISPCNT_B;
+volatile extern int8_t VRAMCNT_C;
+volatile extern int16_t BG3CNT_B;
+
+// Store wether some background should be disable, per-screen
+struct EngineDisplayInfo {
+    bool disable_bg0;
+    bool disable_bg1;
+    bool disable_bg2;
+    bool disable_bg3;
+    bool disable_obj;
+};
+extern struct EngineDisplayInfo ENGINE_DISPLAY_INFO[2];

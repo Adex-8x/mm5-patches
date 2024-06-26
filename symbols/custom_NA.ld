@@ -30,6 +30,19 @@ CreatePortraitBoxCallsite = 0x02035118;
 PlayBgmCheck = 0x02019948;
 PlayBgm2Check = 0x02019E14;
 
+# Some video-related io-register
+DISPCNT_A = 0x04000000;
+DISPCNT_B = 0x04001000;
+
+BG3CNT_B = 0x0400100E;
+BG3CNT_A = 0x0400000E;
+BG1CNT_A = 0x0400000A;
+
+VRAMCNT_A = 0x04000240;
+VRAMCNT_C = 0x04000242;
+VRAMCNT_D = 0x04000243;
+DISPCAPCNT = 0x4000064;
+
 /* !file overlay11 */
 MenuStartFinish = 0x022e68ac;
 MenuEndFinish = 0x022e6e58;
@@ -44,3 +57,9 @@ ProcessMessageMenuParam1 = 0x022de3f4;
 SomeGroundModeLoopUpdateFunctionIdk = 0x022dc808;
 LoadActorAnimDataStart = 0x022f5bcc;
 LoadActorLayeringBitfeld = 0x022f816c;
+
+ENGINE_DISPLAY_INFO = 0x022A37AC; # EU: 0x020091c8
+
+# Hook at the start of the frame, when it’s safe to write to the VRAM
+FrameHookStart = 0x022e930c; # EU: 0x022e9c4c
+FrameHookCallAtEnd = 0x02008f88; # EU: 0x02008f88 (the same)
