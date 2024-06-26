@@ -1,4 +1,5 @@
-# run with make -f compile_ressource.mk (while in the project root’s folder)
+# run with make -f compile_ressources.mk (while in the project root’s folder)
+# must have a "rom_true_base.nds" present in the root folder, which will generate "rom.nds"
 
 # compile some ressources into the rom (separated from main Makefile as it need some python dependancies and allow to manage some files without having to spoil them on this repo)
 
