@@ -63,3 +63,10 @@ ENGINE_DISPLAY_INFO = 0x022A37AC; # EU: 0x020091c8
 # Hook at the start of the frame, when it’s safe to write to the VRAM
 FrameHookStart = 0x022e930c; # EU: 0x022e9c4c
 FrameHookCallAtEnd = 0x02008f88; # EU: 0x02008f88 (the same)
+
+/* !file ram */
+TSXPosLive = 0x22A35DC;
+TSYPosLive = 0x22A35E0;
+TSPressed = 0x22A35E4;
+TSXPosLastMitDrag = 0x22A35FC;
+TSYPosLastMitDrag = 0x22A3600;

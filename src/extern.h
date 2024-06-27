@@ -108,3 +108,10 @@ struct EngineDisplayInfo {
     bool disable_obj;
 };
 extern struct EngineDisplayInfo ENGINE_DISPLAY_INFO[2];
+
+//Touchscreen Variables
+extern uint8_t TSXPosLive;
+extern uint8_t TSYPosLive;
+extern uint8_t TSXPosLastMitDrag;
+extern uint8_t TSYPosLastMitDrag;
+extern uint8_t TSPressed;
