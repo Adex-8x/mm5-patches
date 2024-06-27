@@ -109,6 +109,9 @@ struct EngineDisplayInfo {
 };
 extern struct EngineDisplayInfo ENGINE_DISPLAY_INFO[2];
 
+// some atan stuff to convert a coordinate to angle
+uint16_t FX_Atan2Idx(int32_t y, int32_t x);
+
 //Touchscreen Variables
 extern uint8_t TSXPosLive;
 extern uint8_t TSYPosLive;

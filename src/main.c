@@ -1,6 +1,8 @@
 #include <pmdsky.h>
 #include <cot.h>
 #include "extern.h"
+#include "trail_bottom_3d.h"
+#include "top_screen_management.h"
 
 // The following variables are for "special" windows that persist via calling Special Process 254.
 uint8_t SPECIAL_DBOX_ID;
@@ -248,5 +250,6 @@ extern void FrameHookCallAtEnd();
 // On each frame, but only in the overworld (overlay 11)
 __attribute__((used)) void OnEachFrame() {
     CustomTopScreenOnEachFrame();
+    //ProcessBottomTrail3d();
     FrameHookCallAtEnd();
 }
