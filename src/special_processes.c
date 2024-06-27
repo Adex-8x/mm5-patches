@@ -2,6 +2,7 @@
 #include <cot.h>
 #include "extern.h"
 #include "top_screen_management.h"
+#include "dragndrop.c"
 
 bool process_has_been_called_once = false;
 
@@ -125,6 +126,11 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
       initDrawingOnTopScreen(temppath);
       return true;
     
+    //Argoniens DragNDrop Patch
+    case 115:
+      *return_val = checkIfTsValuesAreInDefinedRange(arg1);
+      return true;
+
     case 254:
       *return_val = SpCreateSpecialWindow(arg1, arg2);
       return true;
