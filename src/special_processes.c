@@ -125,6 +125,18 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
       COT_LOGFMT(COT_LOG_CAT_SPECIAL_PROCESS, "loading prp %s", temppath);
       initDrawingOnTopScreen(temppath);
       return true;
+    // Draw a trail following the cursor on the bottom screen
+    case 113:
+      switch (arg1) {
+        case 0:
+        case 1:
+          setTrailEnabled(arg1 == 1);
+          break;
+        case 2:
+          Load3dTrailTextures();
+          break;
+      }
+      return true;
     
     //Argoniens DragNDrop Patch
     case 115:

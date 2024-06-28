@@ -118,3 +118,7 @@ extern uint8_t TSYPosLive;
 extern uint8_t TSXPosLastMitDrag;
 extern uint8_t TSYPosLastMitDrag;
 extern uint8_t TSPressed;
+
+// texture loading related functions
+void ProcessWTEWrapper(struct wte_handle *wte_ref,undefined4 dest_vram_offset,undefined4 palette_high_byte, undefined4 palette_low_byte);
+void DoSomethingOn3dAllocAndClearInput(void **wte_ref);
