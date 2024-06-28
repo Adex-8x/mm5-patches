@@ -43,6 +43,9 @@ VRAMCNT_C = 0x04000242;
 VRAMCNT_D = 0x04000243;
 DISPCAPCNT = 0x4000064;
 
+ProcessWTEWrapper = 0x0201e12c; #EU: 0x0201e1c8;
+DoSomethingOn3dAllocAndClearInput = 0x0201e13c; #EU: 0x0201e1d8;
+
 /* !file overlay11 */
 MenuStartFinish = 0x022e68ac;
 MenuEndFinish = 0x022e6e58;

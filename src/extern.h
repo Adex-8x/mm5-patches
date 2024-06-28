@@ -109,9 +109,16 @@ struct EngineDisplayInfo {
 };
 extern struct EngineDisplayInfo ENGINE_DISPLAY_INFO[2];
 
+// some atan stuff to convert a coordinate to angle
+uint16_t FX_Atan2Idx(int32_t y, int32_t x);
+
 //Touchscreen Variables
 extern uint8_t TSXPosLive;
 extern uint8_t TSYPosLive;
 extern uint8_t TSXPosLastMitDrag;
 extern uint8_t TSYPosLastMitDrag;
 extern uint8_t TSPressed;
+
+// texture loading related functions
+void ProcessWTEWrapper(struct wte_handle *wte_ref,undefined4 dest_vram_offset,undefined4 palette_high_byte, undefined4 palette_low_byte);
+void DoSomethingOn3dAllocAndClearInput(void **wte_ref);

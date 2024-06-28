@@ -21,31 +21,31 @@ static int checkIfTsValuesAreInDefinedRange(short arg1){
   TSY = TSY*256;//TS Values Set Up
   int TSBitcheck = LoadScriptVariableValue(NULL, VAR_SIDE06_ROOM);
   if (TSBitcheck == 0){
-  if (TSP == 0){
-    return 255;
-  }
-  //Check for Index 0
-  int XInd = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_X, 0);
-  int YInd = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 0);
-  if (TSX < XInd+2560 && TSX > XInd-2560 && TSY > YInd-5120 && TSY+512  < YInd){
-    ChangePressBit();
-    return 0;
-  }
-  //Check for Index 1
-  XInd = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_X, 1);
-  YInd= LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 1);
-  if (TSX < XInd+2560 && TSX > XInd-2560 && TSY > YInd-5120 && TSY+512  < YInd){
-    ChangePressBit();
-    return 1;
-  }
-  //Check for Index 2
-  XInd = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_X, 2);
-  YInd= LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 2);
-  if (TSX < XInd+2560 && TSX > XInd-2560 && TSY > YInd-5120 && TSY+512 < YInd){
-    ChangePressBit();
-    return 2;
-  }
-  return 254;
+    if (TSP == 0){
+      return 255;
+    }
+    //Check for Index 0
+    int XInd = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_X, 0);
+    int YInd = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 0);
+    if (TSX < XInd+2560 && TSX > XInd-2560 && TSY > YInd-5120 && TSY+512  < YInd){
+      ChangePressBit();
+      return 0;
+    }
+    //Check for Index 1
+    XInd = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_X, 1);
+    YInd= LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 1);
+    if (TSX < XInd+2560 && TSX > XInd-2560 && TSY > YInd-5120 && TSY+512  < YInd){
+      ChangePressBit();
+      return 1;
+    }
+    //Check for Index 2
+    XInd = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_X, 2);
+    YInd= LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 2);
+    if (TSX < XInd+2560 && TSX > XInd-2560 && TSY > YInd-5120 && TSY+512 < YInd){
+      ChangePressBit();
+      return 2;
+    }
+    return 254;
   }
   else{
     if (TSP == 0){
