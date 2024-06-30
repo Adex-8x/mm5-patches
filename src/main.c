@@ -251,5 +251,6 @@ extern void FrameHookCallAtEnd();
 __attribute__((used)) void OnEachFrame() {
     CustomTopScreenOnEachFrame();
     ProcessBottomTrail3d();
+    //TestDrawMesh();
     FrameHookCallAtEnd();
 }

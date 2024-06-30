@@ -1,0 +1,9 @@
+[package]
+name = "model_convert"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5.8", features = ["derive"] }
+rand = "0.8.5"
+wavefront_obj = "10.0.0"

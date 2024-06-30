@@ -3,7 +3,7 @@
 
 # compile some ressources into the rom (separated from main Makefile as it need some python dependancies and allow to manage some files without having to spoil them on this repo)
 
-# the magic nix command (for those who use it) to get the dep is nix-shell -p python3Packages.skytemple-files -p python3Packages.pillow -p python3Packages.svgelements -p python3Packages.scipy
+# the magic nix command (for those who use it) to get the dep is nix-shell -p python3Packages.skytemple-files -p python3Packages.pillow -p python3Packages.svgelements -p python3Packages.scipy -p cargo
 ROM_IN := rom_true_base.nds
 ROM_DEST := rom.nds
 
@@ -31,7 +31,14 @@ fs_patch_temp/CUSTOM/VRAM/%.wte: fs_patch_source/vram/%.png tool/wte_convert/con
 	mkdir -p fs_patch_temp/CUSTOM/VRAM
 	python3 tool/wte_convert/convert.py $< $@
 
-FS_PATCH_TEMP_INPUT = $(SCREEN_DEST) $(PRP_DEST) $(VRAM_DEST) $(ROM_IN)
+MODEL_SRC = $(wildcard fs_patch_source/model/*.obj)
+MODEL_DEST = $(patsubst fs_patch_source/model/%.obj,fs_patch_temp/CUSTOM/MODEL/%.fifo,$(MODEL_SRC))
+
+fs_patch_temp/CUSTOM/MODEL/%.fifo: fs_patch_source/model/%.obj tool/model_convert/Cargo.toml tool/model_convert/Cargo.lock tool/model_convert/src/main.rs
+	mkdir -p fs_patch_temp/CUSTOM/MODEL
+	cargo run --manifest-path ./tool/model_convert/Cargo.toml -- $< $@
+
+FS_PATCH_TEMP_INPUT = $(SCREEN_DEST) $(PRP_DEST) $(VRAM_DEST) $(MODEL_DEST) $(ROM_IN)
 
 $(ROM_DEST): $(FS_PATCH_TEMP_INPUT)
 	@rm -rf temp_rom_folder
