@@ -103,4 +103,5 @@ You can also change the compiler flags to optimize for size instead of speed. To
 ## Licensing
 - Build scripts (everything under the `tools`) are licensed under GPLv3. Review the file `LICENSE_GPLv3` for more information.
 - The parrot photo at `fs_patch_source/screen/0001.png` is in the public domain (taken by Adrian Pingstone)
+- `src/libnds_cache.s`, `src/libnds_dma.h`, `src/libnds_videoGL.h` are under some permissive license from libnds.
 - All other code is licensed under MIT. Review the file `LICENSE_MIT` for more information.
