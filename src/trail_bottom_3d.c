@@ -60,7 +60,6 @@ void ProcessBottomTrail3d() {
             float distance_f = EuclideanNorm(&delta_list);
             int distance = _ffix(distance_f);
 
-            int rot = 0;
             if (distance >= 8) {
 
                 if (STEP_LEN < STEP_COUNT) {

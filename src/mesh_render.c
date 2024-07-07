@@ -1,13 +1,15 @@
+// The 3D engine use signed fixed point on 12 bit numbers
 #include "extern.h"
 #include "libnds_videoGL.h"
 #include "libnds_dma.h"
+#include "fixed_point_math.h"
 
 // camera default to 0, 0, 0 pointing toward positive depth
 void initializeCustom3D() {
     // Use a custom projection matrix
     GEOM_COMM_MTX_MODE = 0;
     GEOM_COMM_MTX_PUSH = 0;
-    GEOM_COMM_MTX_IDENTITY = 0;
+    //GEOM_COMM_MTX_IDENTITY = 0;
     
     // Generated with compute_projection_matrix.py
     GEOM_COMM_MTX_LOAD_4x4 = -0x2000;
@@ -65,6 +67,56 @@ void sendMesh(struct iovec *command_buffer) {
     GEOM_COMM_END_VTXS = 0;
 }
 
+// 4096 is full rotation
+void doXRot(int angle) {
+    struct trig_values sincos = lookup_rotation(angle);
+
+    GEOM_COMM_MTX_MULT_3x3 = 1 << 12;
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    GEOM_COMM_MTX_MULT_3x3 = (int32_t) sincos.cos;
+    GEOM_COMM_MTX_MULT_3x3 = (int32_t) sincos.sin;
+    
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    GEOM_COMM_MTX_MULT_3x3 = - (int32_t) sincos.sin;
+    GEOM_COMM_MTX_MULT_3x3 = (int32_t) sincos.cos;
+}
+
+// 4096 is full rotation
+void doYRot(int angle) {
+    struct trig_values sincos = lookup_rotation(angle);
+
+    GEOM_COMM_MTX_MULT_3x3 = (int32_t) sincos.cos;
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    GEOM_COMM_MTX_MULT_3x3 = (int32_t) sincos.sin;
+
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    GEOM_COMM_MTX_MULT_3x3 = 1 << 12;
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    
+    GEOM_COMM_MTX_MULT_3x3 = - (int32_t) sincos.sin;
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    GEOM_COMM_MTX_MULT_3x3 = (int32_t) sincos.cos;
+}
+
+// 4096 is full rotation
+void doZRot(int angle) {
+    struct trig_values sincos = lookup_rotation(angle);
+
+    GEOM_COMM_MTX_MULT_3x3 = (int32_t) sincos.cos;
+    GEOM_COMM_MTX_MULT_3x3 = (int32_t) sincos.sin;
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+
+    GEOM_COMM_MTX_MULT_3x3 = - (int32_t) sincos.sin;
+    GEOM_COMM_MTX_MULT_3x3 = (int32_t) sincos.cos;
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    GEOM_COMM_MTX_MULT_3x3 = 0;
+    GEOM_COMM_MTX_MULT_3x3 = 1 << 12;
+}
 
 struct iovec COMMAND_BUFFER;
 bool IS_INITIALISED = false;
@@ -90,12 +142,13 @@ void TestDrawMesh() {
         IS_INITIALISED = true;
     }
 
-
     test_trans += 1;
     
     initializeCustom3D();
 
     GEOM_COMM_MTX_IDENTITY = 0;
+
+    // Yes, there’s obviously more efficient way to do. No, I don’t care.
 
     GEOM_COMM_MTX_TRANS = 0;
     GEOM_COMM_MTX_TRANS = 0;
@@ -104,6 +157,8 @@ void TestDrawMesh() {
     GEOM_COMM_MTX_SCALE = (0x1 << 12);
     GEOM_COMM_MTX_SCALE = (0x1 << 12);
     GEOM_COMM_MTX_SCALE = (0x1 << 12);
+
+    doYRot(test_trans * 8);
 
 
     GEOM_COMM_POLYGON_ATTR = POLY_ALPHA(31) | POLY_CULL_FRONT | POLY_MODULATION;

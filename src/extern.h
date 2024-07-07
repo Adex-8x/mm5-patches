@@ -137,6 +137,7 @@ volatile extern int GEOM_COMM_POLYGON_ATTR;
 volatile extern int GEOM_COMM_COLOR;
 volatile extern int GEOM_COMM_MTX_LOAD_4x4;
 volatile extern int GEOM_COMM_PLTT_BASE;
+volatile extern int GEOM_COMM_MTX_MULT_3x3;
 
 // Not really extern, defined in an asm file
 // copied from libnds
