@@ -91,3 +91,33 @@ static int checkIfTsValuesAreInDefinedRange(short arg1){
   return 128;
   }
 }
+
+static int checkPosValues(short arg1){
+  switch (arg1){
+    case 0:
+      int TSY0 = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 0);
+      int TSY1 = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 1);
+      int TSY2 = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 2);
+      if (TSY0 < 12800){
+        if (TSY1 < 12800){
+          if (TSY2 < 12800){
+            return 1;
+          }
+        }
+      }
+      return 0;
+    case 1:
+      int TSY02 = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 0);
+      int TSY12 = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 1);
+      int TSY22 = LoadScriptVariableValueAtIndex(NULL, VAR_POSITION_Y, 2);
+      if (TSY02 < 12800){
+        if (TSY12 < 12800){
+          if (TSY22 < 12800){
+            return 1;
+          }
+        }
+      }
+      return 0;
+  }
+
+}

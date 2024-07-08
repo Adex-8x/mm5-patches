@@ -163,7 +163,9 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
     case 115:
       *return_val = checkIfTsValuesAreInDefinedRange(arg1);
       return true;
-
+    case 116:
+      *return_val = checkPosValues(arg1);
+      return true;
     case 254:
       *return_val = SpCreateSpecialWindow(arg1, arg2);
       return true;
