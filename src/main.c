@@ -74,7 +74,7 @@ bool __attribute__((used)) HandleLowercaseJTag(const char* tag_string, char* buf
     {
         char nickname[11];
         if(GetDsFirmwareNicknameAscii(nickname))
-            SprintfStatic(buf, "[CS:O]%s[CR]", nickname);
+            sprintf(buf, "[CS:O]%s[CR]", nickname);
         else
             strcpy(buf, "[CS:O]Unknown[CR]");
         return true;
