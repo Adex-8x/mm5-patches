@@ -29,6 +29,9 @@ NoteSetHeaderMode = 0x0209cd4c;
 CreatePortraitBoxCallsite = 0x02035118;
 PlayBgmCheck = 0x02019948;
 PlayBgm2Check = 0x02019E14;
+LoadFrame = 0x02027180;
+
+FRAMES_COLOR = 0x020afd98;
 
 # Some video-related io-register
 DISPCNT_A = 0x04000000;
@@ -68,6 +71,8 @@ FrameHookStart = 0x022e930c; # EU: 0x022e9c4c
 FrameHookCallAtEnd = 0x02008f88; # EU: 0x02008f88 (the same)
 
 /* !file ram */
+CURRENT_FRAME_STYLE = 0x022a7a6e;
+
 TSXPosLive = 0x22A35DC;
 TSYPosLive = 0x22A35E0;
 TSPressed = 0x22A35E4;

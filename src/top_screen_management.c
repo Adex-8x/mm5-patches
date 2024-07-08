@@ -16,6 +16,20 @@ uint32_t DISPCNT_B_RELEVANT_BITS_BAK;
 uint16_t BG3CNT_B_BAK;
 struct EngineDisplayInfo ENGINE_DISPLAY_INFO_BAK_B;
 
+// An hack, as the game set the color of the frame sometimes later in the frame after being reloaded, and can’t figure where exactly
+uint8_t FRAMES_COLOR_BACKUP[2];
+bool RESTORE_FRAMES_IN = 0;
+
+void restore_frames_color_if_needed() {
+    if (RESTORE_FRAMES_IN > 0) {
+        RESTORE_FRAMES_IN -= 1;
+        if (RESTORE_FRAMES_IN == 0) {
+            SetScreenWindowsColor(FRAMES_COLOR_BACKUP[0], 0);
+            SetScreenWindowsColor(FRAMES_COLOR_BACKUP[1], 1);
+        }
+    }
+}
+
 void configureTopScreenDisplayToBitmap() {
     if (CUSTOM_VRAM_TOP_MODE_ENABLED != 0) {
         return;
@@ -106,10 +120,17 @@ void topScreenReturnToNormal() {
     CUSTOM_VRAM_TOP_MODE_ENABLED = 0;
     CUSTOM_VRAM_IS_DRAWING_MODE = 0;
 
+    FRAMES_COLOR_BACKUP[0] = FRAMES_COLOR[0];
+    FRAMES_COLOR_BACKUP[1] = FRAMES_COLOR[1];
+    LoadFrame(CURRENT_FRAME_STYLE);
+    RESTORE_FRAMES_IN = 2;
+
     COT_LOG(COT_LOG_CAT_SPECIAL_PROCESS, "VRAM returned to normal");
 }
 
 void CustomTopScreenOnEachFrame() {
+    restore_frames_color_if_needed();
+
     if (CUSTOM_VRAM_TOP_MODE_ENABLED) {
         if (CUSTOM_VRAM_IS_DRAWING_MODE) {
             VRAMCNT_C = 0x80;

@@ -109,6 +109,11 @@ struct EngineDisplayInfo {
 };
 extern struct EngineDisplayInfo ENGINE_DISPLAY_INFO[2];
 
+// (re)load the frame
+void LoadFrame(int frame_id);
+extern uint8_t CURRENT_FRAME_STYLE;
+extern uint8_t FRAMES_COLOR[2];
+
 // some atan stuff to convert a coordinate to angle
 uint16_t FX_Atan2Idx(int32_t y, int32_t x);
 
