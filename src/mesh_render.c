@@ -1,8 +1,5 @@
 // The 3D engine use signed fixed point on 12 bit numbers
-#include "extern.h"
-#include "libnds_videoGL.h"
-#include "libnds_dma.h"
-#include "fixed_point_math.h"
+#include "mesh_render.h"
 
 // camera default to 0, 0, 0 pointing toward positive depth
 void initializeCustom3D() {
@@ -12,12 +9,12 @@ void initializeCustom3D() {
     //GEOM_COMM_MTX_IDENTITY = 0;
     
     // Generated with compute_projection_matrix.py
-    GEOM_COMM_MTX_LOAD_4x4 = -0x2000;
+    GEOM_COMM_MTX_LOAD_4x4 = -0x4000;
     GEOM_COMM_MTX_LOAD_4x4 = 0x0;
     GEOM_COMM_MTX_LOAD_4x4 = 0x0;
     GEOM_COMM_MTX_LOAD_4x4 = 0x0;
     GEOM_COMM_MTX_LOAD_4x4 = 0x0;
-    GEOM_COMM_MTX_LOAD_4x4 = 0x2aab;
+    GEOM_COMM_MTX_LOAD_4x4 = 0x5555;
     GEOM_COMM_MTX_LOAD_4x4 = 0x0;
     GEOM_COMM_MTX_LOAD_4x4 = 0x0;
     GEOM_COMM_MTX_LOAD_4x4 = 0x0;
@@ -29,9 +26,9 @@ void initializeCustom3D() {
     GEOM_COMM_MTX_LOAD_4x4 = -0x1000;
     GEOM_COMM_MTX_LOAD_4x4 = 0x0;
 
+    /*GEOM_COMM_MTX_SCALE = 0x1000;
     GEOM_COMM_MTX_SCALE = 0x1000;
-    GEOM_COMM_MTX_SCALE = 0x1000;
-    GEOM_COMM_MTX_SCALE = 0x1000;
+    GEOM_COMM_MTX_SCALE = 0x1000;*/
 
 
 

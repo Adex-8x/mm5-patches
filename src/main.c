@@ -247,10 +247,19 @@ void __attribute__((naked)) HandleSpecialActorIds()
 
 extern void FrameHookCallAtEnd();
 
+void Custom3dHook() {
+    initializeCustom3D();
+
+    drawProjectileIfNeeded();
+
+    finaliseCustom3d();
+}
 // On each frame, but only in the overworld (overlay 11)
 __attribute__((used)) void OnEachFrame() {
     CustomTopScreenOnEachFrame();
     ProcessBottomTrail3d();
+    Custom3dHook();
+    // is mutually exclusive with
     //TestDrawMesh();
     FrameHookCallAtEnd();
 }

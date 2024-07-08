@@ -3,7 +3,7 @@
 #include <pmdsky.h>
 #include <cot.h>
 #include "drawing.h"
-#include "rng.h"
+#include "smalllib/rng.h"
 #include "display_image.h"
 #include "extern.h"
 

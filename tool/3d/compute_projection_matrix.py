@@ -13,7 +13,7 @@ def print_add_command(value):
 n = 1.0
 f = 100.0
 
-fac = 1/256
+fac = 1/512
 
 t = (192.0 * fac)/2
 b = -(192.0 * fac)/2

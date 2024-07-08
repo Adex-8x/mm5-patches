@@ -123,6 +123,9 @@ extern uint8_t TSPressed;
 void ProcessWTEWrapper(struct wte_handle *wte_ref,undefined4 dest_vram_offset,undefined4 palette_high_byte, undefined4 palette_low_byte);
 void DoSomethingOn3dAllocAndClearInput(void **wte_ref);
 
+// camera stuff
+extern struct vec2_int CAMERA_TOP_LEFT_COORD;
+
 // 3d engine stuff
 volatile extern int GEOM_COMM_BEGIN_VTXS;
 volatile extern int GEOM_COMM_END_VTXS;

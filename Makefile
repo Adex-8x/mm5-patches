@@ -52,7 +52,7 @@ ROM_OUT := out.nds
 
 TARGET		:=	out
 BUILD		:=	build
-SOURCES		:=	src src/cot
+SOURCES		:=	src src/cot src/smalllib
 INCLUDES	:=	include pmdsky-debug/headers
 OPT_LEVEL := -O2
 

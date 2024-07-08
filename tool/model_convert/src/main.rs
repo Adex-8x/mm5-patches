@@ -31,12 +31,12 @@ fn encode_random_color(commands: &mut Vec<u32>) {
     encode_color(commands, (random(), random(), random()));
 }
 
-fn encode_texcoord(commands: &mut Vec<u32>, tex_size: f64, texcoord: &TVertex) {
+fn encode_texcoord(commands: &mut Vec<u32>, tex_size: (f64, f64), texcoord: &TVertex) {
     commands.push(0x22);
-    commands.push(((f64totexformat(1.0 - texcoord.v, tex_size) as u32) << 16) + (f64totexformat(texcoord.u, tex_size) as u32));
+    commands.push(((f64totexformat(1.0 - texcoord.v, tex_size.1) as u32) << 16) + (f64totexformat(texcoord.u, tex_size.0) as u32));
 }
 
-fn encode_optional_texcoord(commands: &mut Vec<u32>, tex_size: f64, texcoord: Option<&TVertex>) {
+fn encode_optional_texcoord(commands: &mut Vec<u32>, tex_size: (f64, f64), texcoord: Option<&TVertex>) {
     if let Some(texcoord) = texcoord {
         encode_texcoord(commands, tex_size, texcoord);
     }
@@ -64,7 +64,11 @@ fn main() {
         .unwrap()
         .read_to_string(&mut tex_size_str)
         .unwrap();
-    let tex_size: f64 = tex_size_str.parse().unwrap();
+    
+    let mut tex_size_iter = tex_size_str.split(",");
+    let tex_size_x: f64 = tex_size_iter.next().unwrap().parse().unwrap();
+    let tex_size_y: f64 = tex_size_iter.next().unwrap().parse().unwrap();
+    let tex_size = (tex_size_x, tex_size_y);
 
     let mut output_buffer: Vec<u32> = Vec::new();
 
