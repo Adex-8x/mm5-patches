@@ -137,7 +137,28 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
           break;
       }
       return true;
-    
+    case 114:
+      switch (arg1) {
+        case 0:
+          loadProjectileData();
+          break;
+        case 1:
+          setShouldRenderProjectile(true);
+          break;
+        case 2:
+          setShouldRenderProjectile(false);
+          break;
+        case 3:
+          projectileStartSpeedUp(arg2);
+          break;
+        case 4:
+          projectileExplode(arg2);
+          break;
+        case 5:
+          projectileFree();
+          break;
+      }
+      return true;
     //Argoniens DragNDrop Patch
     case 115:
       *return_val = checkIfTsValuesAreInDefinedRange(arg1);

@@ -1,6 +1,6 @@
 // under the MIT license, by marius851000
 #include "drawing.h"
-#include "rng.h"
+#include "smalllib/rng.h"
 
 const int VRAM_BASE = 0x6840000;
 
