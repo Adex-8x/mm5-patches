@@ -63,6 +63,7 @@ ProcessMessageMenuParam1 = 0x022de3f4;
 SomeGroundModeLoopUpdateFunctionIdk = 0x022dc808;
 LoadActorAnimDataStart = 0x022f5bcc;
 LoadActorLayeringBitfeld = 0x022f816c;
+ShouldReloadCachedScene = 0x022e573c;
 
 ENGINE_DISPLAY_INFO = 0x022A37AC; # EU: 0x020091c8
 

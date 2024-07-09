@@ -95,4 +95,8 @@
         bl OnEachFrame
     .endarea
 
+    .org ShouldReloadCachedScene
+    .area 0x18
+        nop :: nop :: nop :: nop :: nop :: nop
+    .endarea
 .close
