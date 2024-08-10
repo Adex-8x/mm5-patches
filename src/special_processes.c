@@ -28,6 +28,53 @@ static int SpSetTextboxTransparency(short arg1) {
   return 0;
 }
 
+
+static uint16_t* dispstat = (uint16_t*)0x04000004;
+static uint16_t* bgoff = (uint16_t*)0x04000010;
+static uint32_t* ie = (uint32_t*)0x04000210;
+static uint32_t* irqfunc = (uint32_t*)0x027E0000;
+static int tmpbgoffsets[8];
+static int fcount=0;
+void shake_hbl() {
+  int x;
+  if (dispstat[1]<191) {
+    int y = (dispstat[1]+1+fcount)>>2;
+    if (y&0x8) {
+      x = 0x7-(y&0x7);
+    } else {
+      x = y&0x7;
+    }
+  } else if (dispstat[1]==191) {
+    ++fcount;
+  } else {
+    int y = (fcount)>>2;
+    if (y&0x8) {
+      x = 0x7-(y&0x7);
+    } else {
+      x = y&0x7;
+    }
+  }
+  bgoff[4] = (tmpbgoffsets[2]&0xFFFF)+x+16;
+  bgoff[6] = (tmpbgoffsets[3]&0xFFFF)+x+16;
+}
+
+/*
+    Change HBlank Function
+*/
+static int spHblSelect(short arg1) {
+  if(arg1 == 0) {
+    ie[0] = ie[0]&(~0x2);
+    dispstat[0] = dispstat[0]&(~0x10);
+    irqfunc[1] = 0x02078974;
+  }
+  else {
+    ie[0] = ie[0]|0x2;
+    dispstat[0] = dispstat[0]|0x10;
+    irqfunc[1] = (uint32_t)shake_hbl;
+  }
+  return 0;
+}
+
 /*
     Checks if certain buttons are being held/pressed.
 */
@@ -165,6 +212,9 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
       return true;
     case 116:
       *return_val = checkPosValues(arg1);
+      return true;
+    case 117:
+      *return_val = spHblSelect(arg1);
       return true;
     case 254:
       *return_val = SpCreateSpecialWindow(arg1, arg2);
