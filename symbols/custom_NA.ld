@@ -30,6 +30,10 @@ CreatePortraitBoxCallsite = 0x02035118;
 PlayBgmCheck = 0x02019948;
 PlayBgm2Check = 0x02019E14;
 LoadFrame = 0x02027180;
+GetOptionsMenuResult = 0x0202d5e4;
+GetOptionsMenuAllChoices = 0x0202d5b0;
+LoadMarkfont = 0x02025AD8;
+LoadMarkfontPal = 0x02025C14;
 
 FRAMES_COLOR = 0x020afd98;
 
@@ -64,6 +68,9 @@ SomeGroundModeLoopUpdateFunctionIdk = 0x022dc808;
 LoadActorAnimDataStart = 0x022f5bcc;
 LoadActorLayeringBitfeld = 0x022f816c;
 ShouldReloadCachedScene = 0x022e573c;
+LoadActingSector = 0x022e5a38;
+LoadSceneStuff = 0x022e5bb8;
+RemoveActingSector = 0x022e5b10;
 
 ENGINE_DISPLAY_INFO = 0x022A37AC; # EU: 0x020091c8
 

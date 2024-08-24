@@ -83,12 +83,25 @@ void SprintfClockInfo(struct clock_info* clock_info, char* buf);
 void LoadStaffont(int idx);
 void FadeOutTopScreenTopMenu(int duration);
 void SomeGroundModeLoopUpdateFunctionIdk();
+int GetOptionsMenuResult(int window_id);
+void GetOptionsMenuAllChoices(int window_id, int* buf);
+void LoadActingSector(int sector_id);
+void LoadSceneStuff(int sector_id);
+void RemoveActingSector(int sector_id);
 
+#define TOTAL_SCENES 25
 #define TEXT_STRING_SCENE_SELECTOR_TITLE 8735
 #define TEXT_STRING_MYSTERYMAIL_BLURB 8736
 #define TEXT_STRING_PARTICIPANT_NAME_START 8737
 #define TEXT_STRING_PLAY_SCENE_QUESTION 8763
 #define TEXT_STRING_PLAY_FINALE_QUESTION 8764
+#define TEXT_STRING_MAIN_MENU_TITLE 8765
+#define TEXT_STRING_MAIN_MENU_OPTION_NAME_START 8766
+#define TEXT_STRING_MAIN_BLURB 8770
+#define TEXT_STRING_SCENE_STARTER_TITLE 8771
+#define TEXT_STRING_SCENE_STARTER_DESC 8772
+#define TEXT_STRING_SCENE_STARTER_CHOICES 8773
+#define TEXT_STRING_PARTICIPANT_CREDITS_START 8800
 
 static void PlaySoundEffect(int se_id) { se_Play(se_id, 0x100, 0x1F); }
 
