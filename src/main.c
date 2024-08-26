@@ -4,6 +4,10 @@
 #include "trail_bottom_3d.h"
 #include "top_screen_management.h"
 
+// The following variables are for a window that displays participants' names when a new scene plays via selecting "Play All Scenes".
+uint8_t PARTICIPANT_DBOX_ID;
+int PARTICIPANT_DBOX_TIMER = -1;
+
 // The following variables are for "special" windows that persist via calling Special Process 254.
 uint8_t SPECIAL_DBOX_ID;
 uint8_t SPECIAL_DBOX_TYPE;
@@ -195,6 +199,12 @@ void __attribute__((used)) CustomUpdateAnything()
                 }
                 break;
         }
+    }
+    if(PARTICIPANT_DBOX_TIMER >= 0) // Participant credits window; this could've also been 62, but wynaut have both active if possible?
+    {
+        if(PARTICIPANT_DBOX_TIMER == 0)
+            CloseDialogueBox(PARTICIPANT_DBOX_ID);
+        PARTICIPANT_DBOX_TIMER--;
     }
 }
 

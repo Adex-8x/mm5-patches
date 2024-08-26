@@ -89,6 +89,39 @@ static bool SpCheckInputStatus(short arg1, short arg2) {
 }
 
 /*
+    Creates a special window that displays participants' names relative to their scene.
+*/
+static bool SpCreateParticipantWindow()
+{
+  int scene_number = LoadScriptVariableValue(NULL, VAR_DUNGEON_EVENT_LOCAL);
+  char* participant_string;
+  char popup_message[512] = "[CN][CS:C]Scene [var:93:0][CR]\n[CN]";
+  struct window_params window_params = { .x_offset = 0x1, .y_offset = 0x1, .width = 0x1E, .height = 0x4, .screen = 0x0, .box_type = 0xFC };
+  struct preprocessor_flags preprocessor_flags = {.flags_1 = 0b000000010, .timer_2 = true}; // Instant text without waiting for any input!
+  if(scene_number >= TOTAL_SCENES)
+  {
+    window_params.box_type.val = 0xFA;
+    window_params.height = 0x2;
+    strcpy(popup_message, "[CN][CS:C]FINALE[CR]");
+  }
+  else
+  {
+    participant_string = StringFromId(scene_number-1+TEXT_STRING_PARTICIPANT_NAME_START);
+    for(int i = 0; i < strlen(participant_string); i++)
+    {
+      if(participant_string[i] == '\n')
+        participant_string[i] = ' ';
+    }
+    strcat(popup_message, participant_string);
+  }
+  if(PARTICIPANT_DBOX_TIMER < 0)
+    PARTICIPANT_DBOX_ID = CreateDialogueBox(&window_params);
+  ShowStringInDialogueBox(PARTICIPANT_DBOX_ID, preprocessor_flags, popup_message, NULL);
+  PARTICIPANT_DBOX_TIMER = 480;
+  return true;
+}
+
+/*
     Creates a special window that will persist even after this process finishes.
 */
 static bool SpCreateSpecialWindow(short idx, short optional_message_id)
@@ -215,6 +248,9 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
       return true;
     case 117:
       *return_val = spHblSelect(arg1);
+      return true;
+    case 253:
+      *return_val = SpCreateParticipantWindow();
       return true;
     case 254:
       *return_val = SpCreateSpecialWindow(arg1, arg2);

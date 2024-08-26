@@ -3,6 +3,10 @@
 #include <pmdsky.h>
 #include <cot.h>
 
+// The following variables are for a window that displays participants' names when a new scene plays via selecting "Play All Scenes".
+extern uint8_t PARTICIPANT_DBOX_ID;
+extern int PARTICIPANT_DBOX_TIMER;
+
 // The following variables are for "special" windows that persist via calling Special Process 254.
 extern uint8_t SPECIAL_DBOX_ID;
 extern uint8_t SPECIAL_DBOX_TYPE;
