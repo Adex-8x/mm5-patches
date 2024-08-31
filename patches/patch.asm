@@ -100,3 +100,10 @@
         nop :: nop :: nop :: nop :: nop :: nop
     .endarea
 .close
+
+.open "overlay28.bin", overlay28_start
+    .org 0x0238ad0d
+    .area 0x1
+        .byte 0x62
+    .endarea
+.close
