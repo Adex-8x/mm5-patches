@@ -150,7 +150,7 @@ int GetSpecialNameCategory(const char* buffer)
     int category = -1;
     char lowercase_name[10];
     char* script_string = GetScriptString(SCRIPT_STRUCT_UNK_PTR, 0);
-    MemZero(name_check_string, 10);
+    MemZero(name_check_string, 11);
     strncpy(name_check_string, buffer, 10);
     GetLowercaseName(buffer, lowercase_name);
     struct file_stream file;
