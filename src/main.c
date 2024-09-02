@@ -14,6 +14,9 @@ uint8_t SPECIAL_DBOX_TYPE;
 uint16_t SPECIAL_MESSAGE_ID;
 struct preprocessor_flags SPECIAL_PREPROCRESSOR_FLAGS;
 
+// For the name check!
+char name_check_string[11];
+
 /*
     Hijacks loading a custom Acting scene.
     In practice, this essentially goes "if we are attempting load an Acting scene with the name 'event', then instead load the scene based on $DUNGEON_EVENT_LOCAL."
@@ -69,6 +72,7 @@ bool GetDsFirmwareNicknameAscii(char* buf)
     Handles various possible text tags for the character 'j'. Currently, the new text tags include:
         - "jugador", which will be replaced with the DS firmware nickname (or "Unknown", if failing to convert the nickname)
         - "joy", which will print out the system clock's date and time using the format "year/month/day hour:minute:second"
+        - "journal", which will print out the result of the last keyboard input.
 
     Returns whether a valid text tag was parsed or not.
 */
@@ -88,6 +92,11 @@ bool __attribute__((used)) HandleLowercaseJTag(const char* tag_string, char* buf
         struct clock_info clock_info;
         GetCurrentClockInfo(&clock_info);
         SprintfClockInfo(&clock_info, buf);
+        return true;
+    }
+    else if(StrcmpTag(tag_string, "journal"))
+    {
+        sprintf(buf, "[CS:N]%s[CR]", name_check_string);
         return true;
     }
     return false;

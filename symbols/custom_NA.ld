@@ -34,6 +34,7 @@ GetOptionsMenuResult = 0x0202d5e4;
 GetOptionsMenuAllChoices = 0x0202d5b0;
 LoadMarkfont = 0x02025AD8;
 LoadMarkfontPal = 0x02025C14;
+SetupKeyboard = 0x020367B4;
 
 FRAMES_COLOR = 0x020afd98;
 
@@ -54,6 +55,7 @@ ProcessWTEWrapper = 0x0201e12c; #EU: 0x0201e1c8;
 DoSomethingOn3dAllocAndClearInput = 0x0201e13c; #EU: 0x0201e1d8;
 
 /* !file overlay11 */
+IsMenuFinished = 0x02324c9c;
 MenuStartFinish = 0x022e68ac;
 MenuEndFinish = 0x022e6e58;
 MessageMenuKeyboardEnd = 0x022e6a2c;
@@ -71,6 +73,8 @@ ShouldReloadCachedScene = 0x022e573c;
 LoadActingSector = 0x022e5a38;
 LoadSceneStuff = 0x022e5bb8;
 RemoveActingSector = 0x022e5b10;
+GetScriptString = 0x022E4248;
+ScriptMenuRequest = 0x022e60bc;
 
 ENGINE_DISPLAY_INFO = 0x022A37AC; # EU: 0x020091c8
 

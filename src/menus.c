@@ -11,6 +11,7 @@ int MENU_STATE = 0x0;
 int LAST_MENU_RESULT = 0x0;
 int FRAME_COUNTER = -1;
 void (*DelayMenuFunc)(int);
+undefined4* SCRIPT_STRUCT_UNK_PTR;
 struct preprocessor_flags preprocessor_flags = {.flags_1 = 0b000000010, .timer_2 = true}; // Instant text without waiting for any input!
 int SCENE_ITEM_STATES[2];
 uint16_t SCENE_CHOICES_STRING_IDS[TOTAL_SCENES+1];
@@ -134,6 +135,55 @@ void ShowParticipantCredits()
     }
 }
 
+void GetLowercaseName(const char* src, char* dst)
+{
+    MemZero(dst, 10);
+    for(int i = 0; i < 10 && src[i] != NULL; i++)
+        dst[i] = src[i] >= 'A' && src[i] <= 'Z' ? src[i]+0x20 : src[i];
+}
+
+/*
+  Checks for various names that result in unique dialogue playing during the Name Check!
+*/
+int GetSpecialNameCategory(const char* buffer)
+{
+    int category = -1;
+    char lowercase_name[10];
+    char* script_string = GetScriptString(SCRIPT_STRUCT_UNK_PTR, 0);
+    MemZero(name_check_string, 10);
+    strncpy(name_check_string, buffer, 10);
+    GetLowercaseName(buffer, lowercase_name);
+    struct file_stream file;
+    DataTransferInit();
+    FileInit(&file);
+    FileOpen(&file, "CUSTOM/NAME/onamaewa.bin");
+    int size = FileGetSize(&file);
+    struct special_check* onamaewa_buffer = MemAlloc(size, 0);
+    int read_bytes = FileRead(&file, onamaewa_buffer, size);
+    FileClose(&file);
+    DataTransferStop();
+    if(read_bytes > 0 && strlen(script_string) == size)
+    {
+        char* encrypted_buffer = onamaewa_buffer;
+        for(int i = 0; i < size; i++)
+            encrypted_buffer[i] ^= script_string[i];
+        for(int i = 0; i < __divsi3(size, sizeof(struct special_check)); i++)
+        {
+            struct special_check entry = onamaewa_buffer[i];
+            if(entry.category == 0)
+                break;
+            int length = entry.length;
+            if(strncmp(lowercase_name, entry.name, length) == 0)
+            {
+                category = entry.category;
+                break;
+            }
+        }
+    }
+    MemFree(onamaewa_buffer);
+    return category;
+}
+
 /*
   Creates an important message for someone who tries to do...undesirable actions.
   Given the conditions in which this function is called, there surely aren't any other exploitative interactions.
@@ -177,6 +227,10 @@ void __attribute__((used)) NewMenuStart(int menu_id)
             LoadStaffont(0);
             SaveScriptVariableValue(NULL, VAR_DUNGEON_EVENT_LOCAL, 0);
             CreateParticipantCredits();
+            break;
+        case 103:
+            SetupKeyboard(3, NULL, NULL);
+            CUSTOM_MAIN_MENU_ID = 0xFE;
             break;
     }
 }
@@ -325,6 +379,10 @@ int __attribute__((used)) NewMenuEnd(int menu_id)
                 FRAME_COUNTER = 360;
                 DelayMenuFunc = ShowParticipantCredits;
                 break;
+            case 103:
+                if(IsMenuFinished)
+                    return_val = GetSpecialNameCategory(GetKeyboardStringResult());
+                break;
             default:
                 return_val = 0xFF;
                 break;
@@ -354,10 +412,19 @@ void __attribute__((naked)) MenuStartHook()
 */
 void __attribute__((naked)) MenuEndHook()
 {
-    // For potential keyboard menus in the future...
-        // asm("cmp r0,#200");
-        // asm("beq MessageMenuKeyboardEnd");
     asm("bl NewMenuEnd");
     asm("str r0,[r6]");
     asm("b MenuEndFinish");
+}
+
+int __attribute__((used)) CustomScriptMenuRequest(int menu_id, undefined4* param_2, undefined4* param_3)
+{
+    SCRIPT_STRUCT_UNK_PTR = param_3;
+    return ScriptMenuRequest(menu_id, param_2);
+}
+
+void __attribute__((naked)) ScriptMenuRequestHook()
+{
+    asm("add r2,r4,#0x14");
+    asm("b CustomScriptMenuRequest");
 }

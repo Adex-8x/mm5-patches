@@ -3,6 +3,8 @@
 #include <pmdsky.h>
 #include <cot.h>
 
+#define ARRAY_COUNT(arr) (sizeof(arr) / sizeof((arr)[0]))
+
 // The following variables are for a window that displays participants' names when a new scene plays via selecting "Play All Scenes".
 extern uint8_t PARTICIPANT_DBOX_ID;
 extern int PARTICIPANT_DBOX_TIMER;
@@ -12,6 +14,9 @@ extern uint8_t SPECIAL_DBOX_ID;
 extern uint8_t SPECIAL_DBOX_TYPE;
 extern uint16_t SPECIAL_MESSAGE_ID;
 extern struct preprocessor_flags SPECIAL_PREPROCRESSOR_FLAGS;
+
+// For the name check!
+extern char name_check_string[11];
 
 // The struct used when calling GetPressedButtons and GetHeldButtons.
 struct button_struct {
@@ -43,6 +48,15 @@ struct clock_info {
   int month;
   int year;
 };
+
+// The struct used to define special names and their categories.
+struct special_check {
+  uint8_t category;
+  uint8_t length;
+  char name[10];
+  uint8_t unk_0xC; // For the fellow nerds out there
+};
+ASSERT_SIZE(struct special_check, 13);
 
 // Layouts for portraits
 enum portrait_layout_types {
@@ -92,6 +106,9 @@ void GetOptionsMenuAllChoices(int window_id, int* buf);
 void LoadActingSector(int sector_id);
 void LoadSceneStuff(int sector_id);
 void RemoveActingSector(int sector_id);
+void SetupKeyboard(int index, char* buffer1, char* buffer2);
+char* GetScriptString(undefined4* ptr, int index);
+int ScriptMenuRequest(int menu_id, undefined4* param_2);
 
 #define TOTAL_SCENES 25
 #define TEXT_STRING_SCENE_SELECTOR_TITLE 8735
@@ -163,6 +180,9 @@ volatile extern int GEOM_COMM_COLOR;
 volatile extern int GEOM_COMM_MTX_LOAD_4x4;
 volatile extern int GEOM_COMM_PLTT_BASE;
 volatile extern int GEOM_COMM_MTX_MULT_3x3;
+
+// Script menu completion flag
+extern bool IsMenuFinished;
 
 // Not really extern, defined in an asm file
 // copied from libnds

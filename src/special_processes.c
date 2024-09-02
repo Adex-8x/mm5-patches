@@ -157,6 +157,19 @@ static bool SpCloseSpecialWindow()
   return true;
 }
 
+static int SpGetHourOfDay()
+{
+  struct clock_info clock_info;
+  GetCurrentClockInfo(&clock_info);
+  return clock_info.hour;
+}
+
+static bool SpCanDisplayFirmwareNickname()
+{
+  char nickname[11];
+  return GetDsFirmwareNicknameAscii(nickname);
+}
+
 // I had problem when I stack-allocated this. // marius
 char temppath[30];
 
@@ -248,6 +261,12 @@ bool CustomScriptSpecialProcessCall(undefined4* unknown, uint32_t special_proces
       return true;
     case 117:
       *return_val = spHblSelect(arg1);
+      return true;
+    case 118:
+      *return_val = SpGetHourOfDay();
+      return true;
+    case 119:
+      *return_val = SpCanDisplayFirmwareNickname();
       return true;
     case 253:
       *return_val = SpCreateParticipantWindow();

@@ -99,6 +99,11 @@
     .area 0x18
         nop :: nop :: nop :: nop :: nop :: nop
     .endarea
+
+    .org 0x022de414
+    .area 0x4
+        bl ScriptMenuRequestHook
+    .endarea
 .close
 
 .open "overlay28.bin", overlay28_start
