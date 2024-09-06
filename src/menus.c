@@ -185,6 +185,50 @@ int GetSpecialNameCategory(const char* buffer)
 }
 
 /*
+  ???
+*/
+int TryAcceptClassifiedCategory(int himitsu_index)
+{
+    int category = 581;
+    struct file_stream file;
+    char* script_strings[2];
+    DataTransferInit();
+    FileInit(&file);
+    FileOpen(&file, "CUSTOM/NAME/door.bin");
+    int size = FileGetSize(&file);
+    struct himitsu_check* himitsu_buffer = MemAlloc(size, 0);
+    char* shenanigans = himitsu_buffer;
+    int read_bytes = FileRead(&file, himitsu_buffer, size);
+    FileClose(&file);
+    DataTransferStop();
+    if(read_bytes > 0 && shenanigans[0] != 'P' && shenanigans[1] != 'K')
+    {
+        for(int i = 0; i < size>>1; i++)
+        {
+            int j = size-1-i;
+            if(i != j)
+            {
+                shenanigans[i] ^= shenanigans[j];
+                shenanigans[j] ^= shenanigans[i];
+                shenanigans[i] ^= shenanigans[j];
+                shenanigans[i] ^= 0xFF;
+                shenanigans[j] ^= 0xFF;
+            }
+        }
+        struct himitsu_check entry = himitsu_buffer[himitsu_index];
+        for(int i = 0; i < 2; i ++)
+        {
+            script_strings[i] = GetScriptString(SCRIPT_STRUCT_UNK_PTR, i+1);
+            MemZero(script_strings[i], strlen(script_strings[i]));
+            strncpy(script_strings[i], shenanigans+entry.offsets[i], entry.length[i]);
+        }
+        category = himitsu_index+200;
+    }
+    MemFree(himitsu_buffer);
+    return category;
+}
+
+/*
   Creates an important message for someone who tries to do...undesirable actions.
   Given the conditions in which this function is called, there surely aren't any other exploitative interactions.
 
@@ -381,7 +425,11 @@ int __attribute__((used)) NewMenuEnd(int menu_id)
                 break;
             case 103:
                 if(IsMenuFinished)
+                {
                     return_val = GetSpecialNameCategory(GetKeyboardStringResult());
+                    if(return_val >= 200 && return_val <= 213)
+                        return_val = TryAcceptClassifiedCategory(return_val-200);
+                }
                 break;
             default:
                 return_val = 0xFF;

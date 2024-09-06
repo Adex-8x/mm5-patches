@@ -58,6 +58,13 @@ struct special_check {
 };
 ASSERT_SIZE(struct special_check, 13);
 
+// The struct used to define...something.
+struct himitsu_check {
+  uint16_t length[2];
+  uint32_t offsets[2];
+};
+ASSERT_SIZE(struct himitsu_check, 12);
+
 // Layouts for portraits
 enum portrait_layout_types {
     FACE_POS_STANDARD = 0,
