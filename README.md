@@ -1,5 +1,5 @@
 # mm5-patches
-A collection of custom ARM Assembly and C patches specifically written for the fifth (currently untitled) MysteryMail event. The featured code is still a work in progress and may feature some degree of spoilers as the event takes place!
+A collection of custom ARM Assembly and C patches specifically written for "Backwards Chaos", the fifth MysteryMail event. The featured code and may feature some degree of spoilers regarding the event!
 
 Want to get acquainted with the general features of MM5, including code from this repo? You can check out the [features page](https://github.com/Adex-8x/mm5-patches/wiki/MM5-Features) for info on handy patches participants may use!
 
